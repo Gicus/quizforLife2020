@@ -1,0 +1,104 @@
+<div class="container" style="margin-top: 70px;">
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2">
+      <div *ngIf="!testIsCreated">
+        <div>
+          <h2 class="text-center">Creeaza-ti propriul test</h2>
+        </div>
+        <h4>Pasul 1</h4>
+        <form #questionForm="ngForm">
+          <div class="form-group">
+            <label for="question" class="font-weight-bold">Intrebarea {{question.currentNumber}}*</label>
+            <textarea [(ngModel)]="question.text" type="text" name="question" class="form-control" id="question"
+                      aria-describedby="intrebareaHelp"
+                      placeholder="Adauga intrebarea" required minlength="3">
+            </textarea>
+          </div>
+          <div class="mt-5"></div>
+          <div class="form-group">
+            <label for="response-a">Raspunsul A*</label>
+            <input [(ngModel)]="question?.answers[0].value" type="text" name="response-a" class="form-control" id="response-a"
+                   required
+                   aria-describedby="responseAHelp" placeholder="Raspunsul A">
+          </div>
+          <div class="form-group">
+            <label for="response-b">Raspunsul B*</label>
+            <input [(ngModel)]="question?.answers[1].value" type="text" name="response-b" class="form-control" id="response-b"
+                   required
+                   aria-describedby="responseBHelp" placeholder="Raspunsul B">
+          </div>
+          <div class="form-group">
+            <label for="response-c">Raspunsul C</label>
+            <input [(ngModel)]="question?.answers[2].value" type="text" name="response-c" class="form-control" id="response-c"
+                   aria-describedby="responseCHelp" placeholder="Raspunsul C">
+          </div>
+          <div class="form-group">
+            <label for="response-d">Raspunsul D</label>
+            <input [(ngModel)]="question?.answers[3].value" type="text" name="response-d" class="form-control" id="response-d"
+                   aria-describedby="responseDHelp" placeholder="Raspunsul D">
+          </div>
+          <div class="form-group">
+            <label for="response-e">Raspunsul E</label>
+            <input [(ngModel)]="question?.answers[4].value" type="text" name="response-e" class="form-control" id="response-e"
+                   aria-describedby="responseEHelp" placeholder="Raspunsul E">
+          </div>
+          <div class="mt-5"></div>
+
+          <div class="form-group">
+            <label for="right-answer">Raspunsul corect*</label>
+            <select class="form-control" id="right-answer"
+                    required
+                    [(ngModel)]="question.rightAnswer" name="rightAnswer">
+              <ng-container *ngFor="let rightAnswer of rightAnswers, let i = index">
+                <option  *ngIf="question.answers[i].value!==''" [value]="rightAnswer">{{rightAnswer}}</option>
+              </ng-container>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="value">Punctaj intrebare (recomandat de la 1 la 100)*</label>
+            <input [(ngModel)]="question.value" type="number" name="value" class="form-control" id="value" min="1"
+                   max="10" maxLength="2" required
+                   aria-describedby="valueHelp" placeholder="Punctaj intrebare">
+          </div>
+          <div class="text-center">
+            <button class="btn btn-secondary" [disabled]="questionForm.invalid" (click)="addCurrentQuestion()">Adauga
+              intrebarea curenta
+            </button>
+          </div>
+        </form>
+        <div class="mt-5"></div>
+        <h4>Pasul 2</h4>
+        <form #testForm="ngForm">
+          <div class="form-group">
+            <label for="test-id">Test ID*</label>
+            <input [ngModel]="test.id | singleString" type="text" name="test-id" class="form-control" id="test-id" required
+                   (ngModelChange)="test.id=$event" aria-describedby="testIdHelp" placeholder="ID de identificare a testului">
+            <small *ngIf="!isUniqueTestId()">Id-ul ales nu este unic. Te rugam alege altul</small>
+          </div>
+          <div class="form-group">
+            <label for="test-due-date">Data expirarii testului</label>
+            <div class="input-group">
+              <input id="test-due-date" class="form-control" placeholder="yyyy-mm-dd" required
+                     name="due-date" [(ngModel)]="test.dueDate" ngbDatepicker #d="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-5">
+            <button class="btn btn-primary" [disabled]="testForm.invalid || test.questions.length === 0 || !isUniqueTestId()" (click)="createTest()">Publica testul
+            </button>
+          </div>
+        </form>
+        <div class="mb-5"></div>
+      </div>
+      <div *ngIf="testIsCreated">
+        <div class="text-center">
+          <h2>Testul avand ID-ul {{test.id}} a fost creat cu success</h2>
+          <button class="btn btn-primary mt-5" [disabled]="!test.id" (click)="goToTest()">Acceseaza test
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
