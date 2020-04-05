@@ -6,7 +6,12 @@
           <h2 class="text-center">Creeaza-ti propriul test</h2>
         </div>
         <h4>Pasul 1</h4>
-        <form #questionForm="ngForm">
+        <div><small> Pe rand, poti adauga oricate intrebari doresti, completand campurile obligatorii marcate cu
+          *.</small></div>
+        <div><small> Dupa ce apesi butonul <b>"Adauga intrebarea curenta"</b>, intrebarea curenta este salvata si se
+          poate completa
+          intrebarea urmatoare.</small></div>
+        <form #questionForm="ngForm" class="mt-3">
           <div class="form-group">
             <label for="question" class="font-weight-bold">Intrebarea {{question.currentNumber}}*</label>
             <textarea [(ngModel)]="question.text" type="text" name="question" class="form-control" id="question"
@@ -17,29 +22,34 @@
           <div class="mt-5"></div>
           <div class="form-group">
             <label for="response-a">Raspunsul A*</label>
-            <input [(ngModel)]="question?.answers[0].value" type="text" name="response-a" class="form-control" id="response-a"
+            <input [(ngModel)]="question?.answers[0].value" class="form-control" id="response-a" name="response-a"
+                   type="text"
                    required
                    aria-describedby="responseAHelp" placeholder="Raspunsul A">
           </div>
           <div class="form-group">
             <label for="response-b">Raspunsul B*</label>
-            <input [(ngModel)]="question?.answers[1].value" type="text" name="response-b" class="form-control" id="response-b"
+            <input [(ngModel)]="question?.answers[1].value" class="form-control" id="response-b" name="response-b"
+                   type="text"
                    required
                    aria-describedby="responseBHelp" placeholder="Raspunsul B">
           </div>
           <div class="form-group">
             <label for="response-c">Raspunsul C</label>
-            <input [(ngModel)]="question?.answers[2].value" type="text" name="response-c" class="form-control" id="response-c"
+            <input [(ngModel)]="question?.answers[2].value" class="form-control" id="response-c" name="response-c"
+                   type="text"
                    aria-describedby="responseCHelp" placeholder="Raspunsul C">
           </div>
           <div class="form-group">
             <label for="response-d">Raspunsul D</label>
-            <input [(ngModel)]="question?.answers[3].value" type="text" name="response-d" class="form-control" id="response-d"
+            <input [(ngModel)]="question?.answers[3].value" class="form-control" id="response-d" name="response-d"
+                   type="text"
                    aria-describedby="responseDHelp" placeholder="Raspunsul D">
           </div>
           <div class="form-group">
             <label for="response-e">Raspunsul E</label>
-            <input [(ngModel)]="question?.answers[4].value" type="text" name="response-e" class="form-control" id="response-e"
+            <input [(ngModel)]="question?.answers[4].value" class="form-control" id="response-e" name="response-e"
+                   type="text"
                    aria-describedby="responseEHelp" placeholder="Raspunsul E">
           </div>
           <div class="mt-5"></div>
@@ -50,7 +60,7 @@
                     required
                     [(ngModel)]="question.rightAnswer" name="rightAnswer">
               <ng-container *ngFor="let rightAnswer of rightAnswers, let i = index">
-                <option  *ngIf="question.answers[i].value!==''" [value]="rightAnswer">{{rightAnswer}}</option>
+                <option *ngIf="question.answers[i].value!==''" [value]="rightAnswer">{{rightAnswer}}</option>
               </ng-container>
             </select>
           </div>
@@ -68,15 +78,23 @@
         </form>
         <div class="mt-5"></div>
         <h4>Pasul 2</h4>
-        <form #testForm="ngForm">
+        <div><small> Dupa ce ai adaugat intrebarile dorite, completeaza urmatoarele 2 campuri obligatorii.</small></div>
+        <div><small> <b>Test ID</b> - reprezinta id-ul de identificare in viitor a testului.
+        </small></div>
+        <div><small><b>Data expirarii testului</b>
+          - reprezinta data pana la care testul se poate completa.</small></div>
+        <form #testForm="ngForm" class="mt-3">
           <div class="form-group">
             <label for="test-id">Test ID*</label>
-            <input [ngModel]="test.id | singleString" type="text" name="test-id" class="form-control" id="test-id" required
-                   (ngModelChange)="test.id=$event" aria-describedby="testIdHelp" placeholder="ID de identificare a testului">
+            <input (ngModelChange)="test.id=$event" [ngModel]="test.id | singleString" aria-describedby="testIdHelp"
+                   class="form-control" id="test-id"
+                   name="test-id"
+                   placeholder="ID de identificare a testului" required
+                   type="text">
             <small *ngIf="!isUniqueTestId()">Id-ul ales nu este unic. Te rugam alege altul</small>
           </div>
           <div class="form-group">
-            <label for="test-due-date">Data expirarii testului</label>
+            <label for="test-due-date">Data expirarii testului*</label>
             <div class="input-group">
               <input id="test-due-date" class="form-control" placeholder="yyyy-mm-dd" required
                      name="due-date" [(ngModel)]="test.dueDate" ngbDatepicker #d="ngbDatepicker">
@@ -86,7 +104,9 @@
             </div>
           </div>
           <div class="text-center mt-5">
-            <button class="btn btn-primary" [disabled]="testForm.invalid || test.questions.length === 0 || !isUniqueTestId()" (click)="createTest()">Publica testul
+            <button (click)="createTest()"
+                    [disabled]="testForm.invalid || test.questions.length === 0 || !isUniqueTestId()"
+                    class="btn btn-primary">Publica testul
             </button>
           </div>
         </form>
