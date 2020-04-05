@@ -10,6 +10,6 @@ export class DateService {
   }
 
   public isDateBeforeCurrentDate(date: NgbDateStruct): boolean {
-    return this.calendar.getToday().before(date);
+    return !this.calendar.getToday().before(date);
   }
 }
