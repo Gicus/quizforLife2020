@@ -9,11 +9,12 @@ export interface SortEvent {
   direction: SortDirection;
 }
 
-const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
+const rotate: { [key: string]: SortDirection } = {asc: 'desc', desc: '', '': 'asc'};
 
 @Directive({
   // tslint:disable-next-line:directive-selector
   selector: 'th[sortable]',
+  // tslint:disable-next-line:no-host-metadata-property
   host: {
     '[class.asc]': 'direction === "asc"',
     '[class.desc]': 'direction === "desc"',

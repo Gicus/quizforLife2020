@@ -1,0 +1,51 @@
+<div class="container" style="margin-top: 70px;">
+  <div>
+    <h2 class="text-center">Contecteaza-te</h2>
+  </div>
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2">
+      <div>
+        <form #loginForm="ngForm">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input #email="ngModel" [(ngModel)]="user.email" aria-describedby="emailHelp" class="form-control"
+                   id="email" minlength="6"
+                   name="email"
+                   pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
+                   placeholder="Introdu adresa de email" required
+                   type="email">
+            <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="email.errors.required">
+                Emailul este obligatoriu!
+              </div>
+              <div *ngIf="email.errors.pattern">
+                Emailul trebuie sa fie valid!
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password">Parola</label>
+            <input #password="ngModel" [(ngModel)]="user.password" aria-describedby="emailHelp" class="form-control"
+                   id="password"
+                   name="password" placeholder="Introdu parola" required
+                   type="password">
+            <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="password.errors.required">
+                Parola este obligatoriu!
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 text-center">
+            <button (click)="signIn()" [disabled]="loginForm.invalid" class="btn btn-primary">Contecteaza-te
+            </button>
+            <button class="btn btn-secondary ml-2" routerLink="/register">Inregistreaza un nou user
+            </button>
+            <div class="mt-2" routerLink="/reset-password">Reseteaza parola</div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
