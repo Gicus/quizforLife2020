@@ -2,6 +2,7 @@ import {AnswerModel} from '../answer-model/answer-model';
 
 export class QuestionModel {
   public id?: number;
+  public youtubeVideoLink?: string;
   public currentNumber?: number;
   public text: string;
   public answers: AnswerModel[] = [

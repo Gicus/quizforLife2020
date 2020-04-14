@@ -3,9 +3,9 @@
     <h2 class="text-center">Inregisteaza-te</h2>
   </div>
   <div class="row">
-    <div class="col-sm-8 offset-sm-2">
+    <div class="col-sm-6 offset-sm-3">
       <div>
-        <form #accesForm="ngForm">
+        <form #loginForm="ngForm">
           <div class="form-group">
             <label for="last-name">Numele</label>
             <input #lastName="ngModel" [(ngModel)]="user.name.lastName" aria-describedby="lastNameHelp"
@@ -59,9 +59,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="email">Parola</label>
+            <label for="password">Parola</label>
             <input #password="ngModel" [(ngModel)]="user.password" aria-describedby="emailHelp" class="form-control"
-                   id="email"
+                   id="password"
                    minlength="6"
                    name="password" placeholder="Introdu parola" required
                    type="password">
@@ -76,7 +76,9 @@
             </div>
           </div>
           <div class="mt-5 text-center">
-            <button (click)="signUp()" [disabled]="accesForm.invalid" class="btn btn-primary">Inregistreaza user
+            <button (click)="signUp()" [disabled]="loginForm.invalid" class="btn btn-primary">Inregistreaza user
+            </button>
+            <button class="btn btn-secondary ml-2" routerLink="/login">Contecteaza-te
             </button>
           </div>
         </form>

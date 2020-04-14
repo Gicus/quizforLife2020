@@ -6,7 +6,7 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {environment} from '../environments/environment';
 
 import {AppComponent} from './app.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ViewTestComponent} from './components/view-test/view-test.component';
 import {CreateTestComponent} from './components/create-test/create-test.component';
 import {RankingComponent} from './components/ranking/ranking.component';
@@ -19,6 +19,12 @@ import {SplitCreateAccessComponent} from './components/split-create-access/split
 import {SingleStringPipe} from './pipes/single-string/single-string.pipe';
 import {NgbdSortableHeaderDirective} from './components/ranking/help/directives/sortable.directive';
 import {ValidationTestComponent} from './components/validation-test/validation-test.component';
+import {LoginComponent} from './components/login/login/login.component';
+import {RegisterComponent} from './components/register/register/register.component';
+import {DashboardComponent} from './components/dashboard/dashboard/dashboard.component';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {SafeStringPipe} from './pipes/safe-string/safe-string.pipe';
+import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -31,9 +37,15 @@ import {ValidationTestComponent} from './components/validation-test/validation-t
     SingleStringPipe,
     NgbdSortableHeaderDirective,
     ValidationTestComponent,
+    LoginComponent,
+    RegisterComponent,
+    DashboardComponent,
+    SafeStringPipe,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     FormsModule,
     NgbModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -41,10 +53,10 @@ import {ValidationTestComponent} from './components/validation-test/validation-t
     RouterModule.forRoot(
       appRoutes,
       // TODO REMOVE
-      { enableTracing: true } // <-- debugging purposes only
+      {enableTracing: true} // <-- debugging purposes only
     )
   ],
-  providers: [],
+  providers: [AngularFireAuth],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -25,8 +25,6 @@ export class ViewTestComponent implements OnInit, OnDestroy {
   currentMark: MarkModel = new MarkModel();
   marks: MarkModel[] = [];
   currentUser: UserModel;
-
-  validationIsSent = false;
   isTestIdValid = true;
   isTestAlreadySubmittedByCurrentUser = false;
   isTestExpired = false;

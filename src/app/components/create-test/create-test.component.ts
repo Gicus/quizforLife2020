@@ -5,7 +5,6 @@ import {QuestionModel} from '../../model/question-model/question-model';
 import {Router} from '@angular/router';
 import {cloneDeep} from 'lodash';
 import {Subscription} from 'rxjs';
-import {NgbDate} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-create-test',

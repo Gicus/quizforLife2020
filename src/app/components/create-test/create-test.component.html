@@ -53,7 +53,6 @@
                    aria-describedby="responseEHelp" placeholder="Raspunsul E">
           </div>
           <div class="mt-5"></div>
-
           <div class="form-group">
             <label for="right-answer">Raspunsul corect*</label>
             <select class="form-control" id="right-answer"
@@ -70,6 +69,15 @@
                    max="10" maxLength="2" required
                    aria-describedby="valueHelp" placeholder="Punctaj intrebare">
           </div>
+          <div class="mt-5"></div>
+          <div class="form-group">
+            <label for="link-youtube-question">Link YOUTUBE video</label>
+            <input [(ngModel)]="question.youtubeVideoLink" aria-describedby="linkResponseHelp" class="form-control"
+                   id="link-youtube-question"
+                   name="link-youtube"
+                   placeholder="Link Youtube" type="text">
+          </div>
+          <div class="mt-5"></div>
           <div class="text-center">
             <button class="btn btn-secondary" [disabled]="questionForm.invalid" (click)="addCurrentQuestion()">Adauga
               intrebarea curenta
@@ -78,12 +86,21 @@
         </form>
         <div class="mt-5"></div>
         <h4>Pasul 2</h4>
-        <div><small> Dupa ce ai adaugat intrebarile dorite, completeaza urmatoarele 2 campuri obligatorii.</small></div>
+        <div><small> Dupa ce ai adaugat intrebarile dorite, completeaza urmatoarele 3 campuri. Test ID si Data expirarii
+          testului sunt obligatorii.</small></div>
+        <div><small> <b>Link YOUTUBE video test</b> - reprezinta linkul spre un video ce va fi afisat in test.
+        </small></div>
         <div><small> <b>Test ID</b> - reprezinta id-ul de identificare in viitor a testului.
         </small></div>
         <div><small><b>Data expirarii testului</b>
           - reprezinta data pana la care testul se poate completa.</small></div>
         <form #testForm="ngForm" class="mt-3">
+          <div class="form-group">
+            <label for="link-youtube-test">Link YOUTUBE video</label>
+            <input [(ngModel)]="test.youtubeVideoLink" aria-describedby="linkResponseHelp" class="form-control" id="link-youtube-test"
+                   name="link-youtube"
+                   placeholder="Link Youtube" type="text">
+          </div>
           <div class="form-group">
             <label for="test-id">Test ID*</label>
             <input (ngModelChange)="test.id=$event" [ngModel]="test.id | singleString" aria-describedby="testIdHelp"
