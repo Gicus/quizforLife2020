@@ -1,0 +1,20 @@
+<!-- Solved tests -->
+<h1 class="h3 mb-4 text-gray-800">Notele mele</h1>
+<div class="row">
+  <div class="col-xl-3 col-md-6 mb-4" *ngFor="let myMark of myMarks">
+    <div class="card border-left-primary shadow h-100 py-2" (click)="navigateToViewTest(myMark.testId)">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1"> Test
+              ID {{ myMark?.testId }}</div>
+            <div class="text-xs font-weight-bold text-gray-800">Punctaj obtinut: {{myMark.value}}</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-graduation-cap fa-2x text-gray-500"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

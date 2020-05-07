@@ -1,11 +1,12 @@
 import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {mergeMap } from 'rxjs/operators';
-import {ActivatedRoute, ParamMap} from '@angular/router';
+import {mergeMap} from 'rxjs/operators';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {TestService} from '../../services/test/test.service';
 import {MarkModel} from '../../model/mark-model/mark-model';
 import {Subscription} from 'rxjs';
 import {cloneDeep, propertyOf} from 'lodash';
 import {NgbdSortableHeaderDirective, SortEvent} from './help/directives/sortable.directive';
+import {AuthenticationService} from '../../services/auth/authentication.service';
 
 const compare = (v1: string, v2: string) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
@@ -16,11 +17,14 @@ const compare = (v1: string, v2: string) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 })
 export class RankingComponent implements OnInit {
 
-  public marks: MarkModel[] = [];
-  public sortableMarks: MarkModel[] = [];
   private marks$: Subscription;
 
-  constructor(private route: ActivatedRoute, private testService: TestService) {
+  public marks: MarkModel[] = [];
+  public sortableMarks: MarkModel[] = [];
+  public showHomeButton = true;
+
+  constructor(private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService, private testService: TestService) {
+    this.showHomeButton = !this.authenticationService.isLoggedIn();
   }
 
   @ViewChildren(NgbdSortableHeaderDirective) headers: QueryList<NgbdSortableHeaderDirective>;
@@ -28,7 +32,7 @@ export class RankingComponent implements OnInit {
   ngOnInit() {
     this.marks$ = this.route.paramMap.pipe(
       mergeMap((params: ParamMap) =>
-        this.testService.getMarksForSpeciedTest(params.get('id')))).subscribe(marks => {
+        this.testService.getMarksForSpecifiedTest(params.get('id')))).subscribe(marks => {
       this.marks = cloneDeep(marks);
       this.sortableMarks = cloneDeep(marks);
       console.log(marks);
@@ -53,5 +57,9 @@ export class RankingComponent implements OnInit {
         return direction === 'asc' ? res : -res;
       });
     }
+  }
+
+  public goToHome(): void {
+    this.router.navigate(['/']);
   }
 }

@@ -12,6 +12,7 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {DateService} from '../../services/date/date.service';
 import {UserModel} from '../../model/user-model/user-model';
 import {QuestionModel} from '../../model/question-model/question-model';
+import {AuthenticationService} from '../../services/auth/authentication.service';
 
 @Component({
   selector: 'app-view-test',
@@ -28,12 +29,14 @@ export class ViewTestComponent implements OnInit, OnDestroy {
   isTestIdValid = true;
   isTestAlreadySubmittedByCurrentUser = false;
   isTestExpired = false;
+  showHomeButton = true;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private testService: TestService,
-    private dateService: DateService
+    private authenticationService: AuthenticationService,
+    private dateService: DateService,
   ) {
     if (!!this.router.getCurrentNavigation() &&
       !!this.router.getCurrentNavigation().extras &&
@@ -43,14 +46,16 @@ export class ViewTestComponent implements OnInit, OnDestroy {
     if (!this.currentUser) {
       this.router.navigate(['/access-test']);
     }
+    this.showHomeButton = !this.authenticationService.isLoggedIn();
   }
 
   ngOnInit() {
+    // noinspection JSDeprecatedSymbols
     combineLatest(this.route.paramMap.pipe(
       mergeMap((params: ParamMap) =>
         this.testService.getTest(params.get('id')))), this.route.paramMap.pipe(
       mergeMap((params: ParamMap) =>
-        this.testService.getMarksForSpeciedTest(params.get('id'))))).subscribe(([test, marks]: [TestModel[], MarkModel[]]) => {
+        this.testService.getMarksForSpecifiedTest(params.get('id'))))).subscribe(([test, marks]: [TestModel[], MarkModel[]]) => {
       if (!!test[0]) {
         this.test = cloneDeep(test[0]);
         this.isTestIdValid = true;
@@ -95,16 +100,20 @@ export class ViewTestComponent implements OnInit, OnDestroy {
     return testValue;
   }
 
+  public goToHome(): void {
+    this.router.navigate(['/']);
+  }
+
   public goToAccess(): void {
-    this.router.navigate(['/access-test']);
+    this.router.navigate([`${this.authenticationService.isLoggedIn() ? 'dashboard' : ''}/access-test`]);
   }
 
   public goToRanking(): void {
-    this.router.navigate([`/ranking/${this.test.id}`]);
+    this.router.navigate([`${this.authenticationService.isLoggedIn() ? 'dashboard' : ''}/ranking/${this.test.id}`]);
   }
 
   public goToValidation(mark: number, testId: string, testTotalValue: number): void {
-    this.router.navigate(['/validation-test'], {state: {mark, testId, testTotalValue}});
+    this.router.navigate([`${this.authenticationService.isLoggedIn() ? 'dashboard' : ''}/validation-test`], {state: {mark, testId, testTotalValue}});
   }
 
   private searchCurrentUserMark(marks: MarkModel[]): MarkModel {

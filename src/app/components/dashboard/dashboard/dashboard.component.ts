@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {AuthenticationService} from '../../../services/auth/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,11 +9,32 @@ import {Component, OnInit} from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() {
+  public currentUser: any = JSON.parse(localStorage.getItem('user'));
+
+  constructor(private router: Router, private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
-    console.log('am incercat sa intru');
+  }
+
+  public navigateToAccessTest(): void {
+    this.router.navigate(['/dashboard/access-test']);
+  }
+
+  public navigateToCreateTest(): void {
+    this.router.navigate(['/dashboard/create-test']);
+  }
+
+  public navigateToMyCreatedTests(): void {
+    this.router.navigate(['/dashboard/my-created-tests']);
+  }
+
+  public navigateToMyMarks(): void {
+    this.router.navigate(['/dashboard/my-marks']);
+  }
+
+  public logOut(): void {
+    this.authenticationService.signOut().then(() => this.router.navigate(['/']));
   }
 
 }

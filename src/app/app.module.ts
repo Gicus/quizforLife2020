@@ -19,12 +19,14 @@ import {SplitCreateAccessComponent} from './components/split-create-access/split
 import {SingleStringPipe} from './pipes/single-string/single-string.pipe';
 import {NgbdSortableHeaderDirective} from './components/ranking/help/directives/sortable.directive';
 import {ValidationTestComponent} from './components/validation-test/validation-test.component';
-import {LoginComponent} from './components/login/login/login.component';
-import {RegisterComponent} from './components/register/register/register.component';
+import {LoginComponent} from './components/login/login.component';
+import {RegisterComponent} from './components/register/register.component';
 import {DashboardComponent} from './components/dashboard/dashboard/dashboard.component';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {SafeStringPipe} from './pipes/safe-string/safe-string.pipe';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
+import { DashboardMyMarksComponent } from './components/dashboard-my-tests/dashboard-my-marks.component';
+import { DashboardTestsCreatedByMeComponent } from './components/dashboard-tests-created-by-me/dashboard-tests-created-by-me.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import {ResetPasswordComponent} from './components/reset-password/reset-password
     DashboardComponent,
     SafeStringPipe,
     ResetPasswordComponent,
+    DashboardMyMarksComponent,
+    DashboardTestsCreatedByMeComponent
   ],
   imports: [
     BrowserModule,

@@ -21,16 +21,24 @@ export class TestService {
     return this.db.list('testsIds').valueChanges();
   }
 
+  public getTestsByCreator(creatorEmail: string): Observable<any> {
+    return this.db.list('tests', (ref) => ref.orderByChild('creator/email').equalTo(creatorEmail)).valueChanges();
+  }
+
+  public getMyMarks(userEmail: string): Observable<any> {
+    return this.db.list('marks', (ref) => ref.orderByChild('user/email').equalTo(userEmail)).valueChanges();
+  }
+
   public postTest(testModel: TestModel): database.ThenableReference {
     this.db.list('testsIds').push(testModel.id);
     return this.db.list('tests').push(testModel);
   }
 
-  public postMark(mark: MarkModel) {
+  public postMark(mark: MarkModel): database.ThenableReference {
     return this.db.list('marks').push(mark);
   }
 
-  public getMarksForSpeciedTest(id: string): Observable<any> {
+  public getMarksForSpecifiedTest(id: string): Observable<any> {
     return this.db.list('marks', (ref) => ref.orderByChild('testId').equalTo(id)).valueChanges();
   }
 
