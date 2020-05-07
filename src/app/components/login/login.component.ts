@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthenticationService} from '../../../services/auth/authentication.service';
-import {UserModel} from '../../../model/user-model/user-model';
+import {AuthenticationService} from '../../services/auth/authentication.service';
+import {UserModel} from '../../model/user-model/user-model';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +11,10 @@ import {UserModel} from '../../../model/user-model/user-model';
 export class LoginComponent implements OnInit {
 
   public user: UserModel = new UserModel();
+  public showHomeButton = true;
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
+    this.showHomeButton = !this.authenticationService.isLoggedIn();
   }
 
   ngOnInit(): void {
@@ -27,5 +29,9 @@ export class LoginComponent implements OnInit {
         })
       );
     }
+  }
+
+  public goToHome(): void {
+    this.router.navigate(['/']);
   }
 }

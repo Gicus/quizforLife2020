@@ -5,6 +5,8 @@ import {QuestionModel} from '../../model/question-model/question-model';
 import {Router} from '@angular/router';
 import {cloneDeep} from 'lodash';
 import {Subscription} from 'rxjs';
+import {AuthenticationService} from '../../services/auth/authentication.service';
+import {UserModel} from '../../model/user-model/user-model';
 
 @Component({
   selector: 'app-create-test',
@@ -21,12 +23,25 @@ export class CreateTestComponent implements OnInit {
   public testIsCreated = false;
   public testsIds: string[] = [''];
   public testsIds$: Subscription;
+  public currentUser: UserModel = new UserModel();
+  public showHomeButton = true;
 
-  constructor(private testService: TestService, private router: Router) {
+  constructor(private testService: TestService, private router: Router, private authenticationService: AuthenticationService) {
+    const user: any = JSON.parse(localStorage.getItem('user'));
+    if (!!user) {
+      this.currentUser.email = user.email ? user.email : '';
+      this.currentUser.name.firstName = user.name ? user.name.split(' ')[1] : '';
+      this.currentUser.name.lastName = user.name ? user.name.split(' ')[0] : '';
+    }
+    this.showHomeButton = !this.authenticationService.isLoggedIn();
   }
 
   ngOnInit(): void {
     this.testsIds$ = this.testService.getAllTestsIds().subscribe(testsIds => this.testsIds = cloneDeep(testsIds));
+    const currentUser = JSON.parse(localStorage.getItem('user'));
+    if (!!currentUser && !!currentUser.email) {
+      this.test.creator.email = currentUser.email;
+    }
   }
 
   public addCurrentQuestion(): void {
@@ -46,7 +61,16 @@ export class CreateTestComponent implements OnInit {
     this.testIsCreated = true;
   }
 
+  public goToHome(): void {
+    this.router.navigate(['/']);
+  }
+
   public goToTest(): void {
-    this.router.navigate([`/view-test/${this.test.id}`]);
+    if (this.authenticationService.isLoggedIn()) {
+      this.router.navigate([`dashboard/view-test/${this.test.id}`], {state: {user: this.currentUser}});
+    } else {
+      this.router.navigate(['/access-test'], {state: {testId: this.test.id}});
+    }
+
   }
 }

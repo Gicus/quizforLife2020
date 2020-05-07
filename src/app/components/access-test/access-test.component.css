@@ -1,3 +1,13 @@
+.go-home {
+  position: fixed;
+  right: 2px;
+  top: 2px;
+}
+
+.fa-home {
+  font-size: 20px;
+}
+
 label {
   font-weight: bold;
 }

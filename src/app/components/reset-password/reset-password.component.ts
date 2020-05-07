@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../services/auth/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-reset-password',
@@ -10,8 +11,10 @@ export class ResetPasswordComponent implements OnInit {
 
   public emailIsSent = false;
   public emailToReset: string;
+  public showHomeButton = true;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private router: Router, private authenticationService: AuthenticationService) {
+    this.showHomeButton = !this.authenticationService.isLoggedIn();
   }
 
   ngOnInit(): void {
@@ -25,5 +28,9 @@ export class ResetPasswordComponent implements OnInit {
 
   public close() {
     this.emailIsSent = false;
+  }
+
+  public goToHome(): void {
+    this.router.navigate(['/']);
   }
 }

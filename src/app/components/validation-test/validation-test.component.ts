@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
+import {AuthenticationService} from '../../services/auth/authentication.service';
 
 @Component({
   selector: 'app-validation-test',
@@ -12,9 +13,11 @@ export class ValidationTestComponent implements OnInit {
   public mark;
   public testTotalValue;
   public testId;
+  public showHomeButton = true;
 
   constructor(
     private router: Router,
+    private authenticationService: AuthenticationService
   ) {
     if (!!this.router.getCurrentNavigation() &&
       !!this.router.getCurrentNavigation().extras &&
@@ -27,17 +30,21 @@ export class ValidationTestComponent implements OnInit {
     if (!isNotNullOrUndefined(this.mark) || !isNotNullOrUndefined(this.testTotalValue) || !isNotNullOrUndefined(this.testId)) {
       this.goToAccess();
     }
+    this.showHomeButton = !this.authenticationService.isLoggedIn();
   }
 
   ngOnInit(): void {
   }
 
+  public goToHome(): void {
+    this.router.navigate(['/']);
+  }
   public goToAccess(): void {
-    this.router.navigate(['/access-test']);
+    this.router.navigate([`${this.authenticationService.isLoggedIn() ? 'dashboard' : ''}/access-test`]);
   }
 
   public goToRanking(): void {
-    this.router.navigate([`/ranking/${this.testId}`]);
+    this.router.navigate([`${this.authenticationService.isLoggedIn() ? 'dashboard' : ''}/ranking/${this.testId}`]);
   }
 
 }

@@ -7,37 +7,24 @@ import {AngularFireAuth} from '@angular/fire/auth';
 })
 export class AuthenticationService {
 
-  private user: Observable<firebase.User>;
-  private userDetails: firebase.User = null;
-
   constructor(private angularFireAuth: AngularFireAuth) {
-    angularFireAuth.authState.subscribe(user => {
-      if (user) {
-        this.userDetails = user;
-        localStorage.setItem('user', JSON.stringify(this.userDetails));
-        JSON.parse(localStorage.getItem('user'));
-      } else {
-        localStorage.setItem('user', null);
-        JSON.parse(localStorage.getItem('user'));
-      }
-    });
   }
 
   public isLoggedIn() {
-    if (this.userDetails == null) {
-      return false;
-    } else {
-      return true;
-    }
+    return JSON.parse(localStorage.getItem('user')) != null;
   }
 
   /* Sign up */
-  public signUp(email: string, password: string): Promise<firebase.auth.UserCredential> {
+  public signUp(email: string, password: string, displayName: string): Promise<firebase.auth.UserCredential> {
     return new Promise<any>((resolve, reject) => {
       this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
-        .then(res => {
+        .then(() => {
+        }, err => reject(err));
+      this.angularFireAuth.auth.onAuthStateChanged((user) => {
+        user.updateProfile({displayName}).then(res => {
           resolve(res);
         }, err => reject(err));
+      });
     });
   }
 
@@ -56,6 +43,7 @@ export class AuthenticationService {
     return new Promise((resolve, reject) => {
       if (this.angularFireAuth.auth.currentUser) {
         this.angularFireAuth.auth.signOut();
+        localStorage.setItem('user', null);
         resolve();
       } else {
         reject();
