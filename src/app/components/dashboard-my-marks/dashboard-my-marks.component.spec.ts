@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DashboardMyMarksComponent } from './dashboard-my-marks.component';
+import {DashboardMyMarksComponent} from './dashboard-my-marks.component';
 
 describe('DashboardMyTestsComponent', () => {
   let component: DashboardMyMarksComponent;

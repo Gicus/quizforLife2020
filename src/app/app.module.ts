@@ -25,8 +25,8 @@ import {DashboardComponent} from './components/dashboard/dashboard/dashboard.com
 import {AngularFireAuth} from '@angular/fire/auth';
 import {SafeStringPipe} from './pipes/safe-string/safe-string.pipe';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
-import { DashboardMyMarksComponent } from './components/dashboard-my-tests/dashboard-my-marks.component';
-import { DashboardTestsCreatedByMeComponent } from './components/dashboard-tests-created-by-me/dashboard-tests-created-by-me.component';
+import {DashboardMyMarksComponent} from './components/dashboard-my-marks/dashboard-my-marks.component';
+import {DashboardTestsCreatedByMeComponent} from './components/dashboard-tests-created-by-me/dashboard-tests-created-by-me.component';
 
 @NgModule({
   declarations: [
