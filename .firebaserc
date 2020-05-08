@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "quizforlife-dd426": {
+      "hosting": {
+        "quizforlife": [
+          "quizforlife-dd426"
+        ]
+      }
+    }
+  }
+}

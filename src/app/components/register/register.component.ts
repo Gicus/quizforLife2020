@@ -23,11 +23,17 @@ export class RegisterComponent implements OnInit {
 
   signUp(): void {
     if (!!this.user.email && !!this.user.password) {
-      this.authenticationService.signUp(this.user.email, this.user.password, `${this.user.name.lastName + ' ' + this.user.name.firstName}`);
+      this.authenticationService.signUp(this.user.email, this.user.password, `${this.user.name.lastName + ' ' + this.user.name.firstName}`).then(() => {
+        this.gotToLogin();
+      });
     }
   }
 
   public goToHome(): void {
     this.router.navigate(['/']);
+  }
+
+  public gotToLogin(): void {
+    this.router.navigate(['/login']);
   }
 }

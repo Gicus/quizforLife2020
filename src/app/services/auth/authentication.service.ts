@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/auth';
 
 @Injectable({
@@ -17,10 +16,10 @@ export class AuthenticationService {
   /* Sign up */
   public signUp(email: string, password: string, displayName: string): Promise<firebase.auth.UserCredential> {
     return new Promise<any>((resolve, reject) => {
-      this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
+      this.angularFireAuth.createUserWithEmailAndPassword(email, password)
         .then(() => {
         }, err => reject(err));
-      this.angularFireAuth.auth.onAuthStateChanged((user) => {
+      this.angularFireAuth.onAuthStateChanged((user) => {
         user.updateProfile({displayName}).then(res => {
           resolve(res);
         }, err => reject(err));
@@ -31,7 +30,7 @@ export class AuthenticationService {
   /* Sign in */
   public signIn(email: string, password: string): Promise<firebase.auth.UserCredential> {
     return new Promise<any>((resolve, reject) => {
-      this.angularFireAuth.auth.signInWithEmailAndPassword(email, password)
+      this.angularFireAuth.signInWithEmailAndPassword(email, password)
         .then(res => {
           resolve(res);
         }, err => reject(err));
@@ -41,8 +40,8 @@ export class AuthenticationService {
   /* Sign out */
   public signOut(): Promise<void> {
     return new Promise((resolve, reject) => {
-      if (this.angularFireAuth.auth.currentUser) {
-        this.angularFireAuth.auth.signOut();
+      if (this.angularFireAuth.currentUser) {
+        this.angularFireAuth.signOut();
         localStorage.setItem('user', null);
         resolve();
       } else {
@@ -52,7 +51,7 @@ export class AuthenticationService {
   }
 
   public resetPassword(email: string): Promise<void> {
-    return this.angularFireAuth.auth.sendPasswordResetEmail(
+    return this.angularFireAuth.sendPasswordResetEmail(
       email,
       {url: 'http://localhost:4200/login'});
   }

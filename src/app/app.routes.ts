@@ -10,7 +10,7 @@ import {RegisterComponent} from './components/register/register.component';
 import {DashboardComponent} from './components/dashboard/dashboard/dashboard.component';
 import {AuthenticationGuard} from './guards/auth/authentication.guard';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
-import {DashboardMyMarksComponent} from './components/dashboard-my-tests/dashboard-my-marks.component';
+import {DashboardMyMarksComponent} from './components/dashboard-my-marks/dashboard-my-marks.component';
 import {DashboardTestsCreatedByMeComponent} from './components/dashboard-tests-created-by-me/dashboard-tests-created-by-me.component';
 
 export const appRoutes: Routes = [

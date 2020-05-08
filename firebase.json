@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "quizforlife",
+      "public": "dist/quizforlife",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}
