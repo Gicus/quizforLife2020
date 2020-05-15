@@ -22,7 +22,7 @@
             <div *ngIf="mainQuestion.invalid && (mainQuestion.dirty || mainQuestion.touched)"
                  class="alert alert-danger">
               <div *ngIf="mainQuestion.errors.required">
-                Intrebarea este obligatorie este obligatoriu!
+                Intrebarea este obligatorie!
               </div>
               <div *ngIf="mainQuestion.errors.minlength">
                 Intrebarea trebuie sa aiba cel putin 3 caractere!
@@ -113,7 +113,7 @@
           </div>
           <div class="mt-5"></div>
           <div class="text-center">
-            <button class="btn btn-secondary" [disabled]="questionForm.invalid" (click)="addCurrentQuestion()">Adauga
+            <button class="btn btn-secondary" [disabled]="questionForm.invalid" (click)="addCurrentQuestion(questionForm)">Adauga
               intrebarea curenta
             </button>
           </div>
