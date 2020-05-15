@@ -20,9 +20,11 @@ export class AuthenticationService {
         .then(() => {
         }, err => reject(err));
       this.angularFireAuth.onAuthStateChanged((user) => {
-        user.updateProfile({displayName}).then(res => {
-          resolve(res);
-        }, err => reject(err));
+        if (!!displayName && !!user) {
+          user.updateProfile({displayName}).then(res => {
+            resolve(res);
+          }, err => reject(err));
+        }
       });
     });
   }

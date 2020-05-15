@@ -1,6 +1,6 @@
 <!-- Solved tests -->
-<h1 class="h3 mb-4 text-gray-800">Notele mele</h1>
-<div class="row">
+<h2 class="h2 mb-4 text-center">Notele mele</h2>
+<div class="row" *ngIf="myMarks.length >0">
   <div class="col-xl-3 col-md-6 mb-4" *ngFor="let myMark of myMarks">
     <div class="card border-left-primary shadow h-100 py-2" (click)="navigateToViewTest(myMark.testId)">
       <div class="card-body">
@@ -18,3 +18,8 @@
     </div>
   </div>
 </div>
+<div class="row" *ngIf="myMarks.length == 0" class="text-center">
+  <div class="text-lg font-weight-bold text-gray-600 mb-1"> Momentan, nu ai nicio nota. Rezolva un test pe pagina "Acceasa test" si nota ta va aparea aici!
+</div>
+
+

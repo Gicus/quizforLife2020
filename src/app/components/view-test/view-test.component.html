@@ -8,14 +8,14 @@
       <div>
         <form #accesForm="ngForm">
           <div *ngIf="!!test && !!test.youtubeVideoLink" class="video-container mt-3 mb-3">
-            <iframe [src]="'https://www.youtube.com/embed/' + test.youtubeVideoLink.replace('https://www.youtube.com/watch?v=', '') | safeString"
+            <iframe [src]="'https://www.youtube.com/embed/' + test.youtubeVideoLink.replace('https://www.youtube.com/watch?v=', '').replace('https://www.youtu.be/', '') | safeString"
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen class="video-element"
                     frameborder="0"></iframe>
           </div>
           <div *ngFor="let question of test?.questions" class="form-group">
             <div *ngIf="!!test.youtubeVideoLink" class="video-container mb-3">
-              <iframe [src]="'https://www.youtube.com/embed/' + question.youtubeVideoLink.replace('https://www.youtube.com/watch?v=', '') | safeString"
+              <iframe [src]="'https://www.youtube.com/embed/' + question.youtubeVideoLink.replace('https://www.youtube.com/watch?v=', '').replace('https://www.youtu.be/', '')| safeString"
                       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                       allowfullscreen class="video-element"
                       frameborder="0"></iframe>

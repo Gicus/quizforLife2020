@@ -23,7 +23,7 @@ export class SplitCreateAccessComponent implements OnInit {
   }
 
   public navigateToDashboard(): void {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/dashboard/my-marks']);
   }
 
 }
