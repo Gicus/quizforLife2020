@@ -7,6 +7,7 @@ import {cloneDeep} from 'lodash';
 import {Subscription} from 'rxjs';
 import {AuthenticationService} from '../../services/auth/authentication.service';
 import {UserModel} from '../../model/user-model/user-model';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-create-test',
@@ -44,10 +45,11 @@ export class CreateTestComponent implements OnInit {
     }
   }
 
-  public addCurrentQuestion(): void {
+  public addCurrentQuestion(form: NgForm): void {
     this.test.questions.push(this.question);
     this.test.calculateTotalValue();
     this.question = new QuestionModel(++this.currentQuestionNumber, ++this.currentQuestionId);
+    form.resetForm();
   }
 
   public isUniqueTestId(): boolean {

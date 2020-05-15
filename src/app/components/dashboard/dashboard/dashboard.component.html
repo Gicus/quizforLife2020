@@ -46,10 +46,10 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-      <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
+<!--    &lt;!&ndash; Sidebar Toggler (Sidebar) &ndash;&gt;-->
+<!--    <div class="text-center d-none d-md-inline">-->
+<!--      <button class="rounded-circle border-0" id="sidebarToggle"></button>-->
+<!--    </div>-->
 
   </ul>
   <!-- End of Sidebar -->
@@ -221,11 +221,11 @@
             <!-- Dropdown - User Information -->
             <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="userDropdown">
-              <a ngbDropdownItem class="dropdown-item">
-                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                Profile
-              </a>
-              <div class="dropdown-divider"></div>
+<!--              <a ngbDropdownItem class="dropdown-item">-->
+<!--                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>-->
+<!--                Profile-->
+<!--              </a>-->
+<!--              <div class="dropdown-divider"></div>-->
               <a ngbDropdownItem class="dropdown-item" data-toggle="modal" data-target="#logoutModal"
                  (click)="logOut()">
                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -241,7 +241,8 @@
 
       <!-- Begin Page Content -->
       <div class="container-fluid">
-        <router-outlet></router-outlet>
+        <router-outlet>
+        </router-outlet>
       </div>
 
     </div>

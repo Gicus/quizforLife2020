@@ -47,7 +47,7 @@
                    id="email" minlength="6"
                    name="email"
                    pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
-                   placeholder="Introdu adresa de email" required
+                   placeholder="Introdu adresa ta de email" required
                    type="email">
             <div *ngIf="email.invalid && (email.dirty || email.touched)"
                  class="alert alert-danger">
@@ -81,6 +81,14 @@
             </button>
             <button class="btn btn-secondary ml-2" routerLink="/login">Contecteaza-te
             </button>
+          </div>
+          <div *ngIf="userIsCreated" class="mt-5 text-center">
+            <ngb-alert (close)="close()" [type]="'success'">Userul a fost creat cu succes!
+            </ngb-alert>
+          </div>
+          <div *ngIf="userIsNotCreated" class="mt-5 text-center">
+            <ngb-alert (close)="close()" [type]="'error'">Userul nu a putut fi creat! Te rugam foloseste o alta adresa de email.
+            </ngb-alert>
           </div>
         </form>
       </div>

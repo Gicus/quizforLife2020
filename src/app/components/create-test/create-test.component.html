@@ -8,67 +8,100 @@
         </div>
         <h4>Pasul 1</h4>
         <div><small> Pe rand, poti adauga oricate intrebari doresti, completand campurile obligatorii marcate cu
-          *.</small></div>
+          .*</small></div>
         <div><small> Dupa ce apesi butonul <b>"Adauga intrebarea curenta"</b>, intrebarea curenta este salvata si se
           poate completa
           intrebarea urmatoare.</small></div>
         <form #questionForm="ngForm" class="mt-3">
           <div class="form-group">
             <label for="question" class="font-weight-bold">Intrebarea {{question.currentNumber}}*</label>
-            <textarea [(ngModel)]="question.text" type="text" name="question" class="form-control" id="question"
+            <textarea #mainQuestion="ngModel" [(ngModel)]="question.text" type="text" name="question" class="form-control" id="question"
                       aria-describedby="intrebareaHelp"
                       placeholder="Adauga intrebarea" required minlength="3">
             </textarea>
+            <div *ngIf="mainQuestion.invalid && (mainQuestion.dirty || mainQuestion.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="mainQuestion.errors.required">
+                Intrebarea este obligatorie!
+              </div>
+              <div *ngIf="mainQuestion.errors.minlength">
+                Intrebarea trebuie sa aiba cel putin 3 caractere!
+              </div>
+            </div>
           </div>
           <div class="mt-5"></div>
           <div class="form-group">
-            <label for="response-a">Raspunsul A*</label>
-            <input [(ngModel)]="question?.answers[0].value" class="form-control" id="response-a" name="response-a"
+            <label for="responseA">Raspunsul A*</label>
+            <input #responseA="ngModel" [(ngModel)]="question?.answers[0].value" class="form-control" id="responseA" name="responseA"
                    type="text"
                    required
                    aria-describedby="responseAHelp" placeholder="Raspunsul A">
+            <div *ngIf="responseA.invalid && (responseA.dirty || responseA.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="responseA.errors.required">
+                Raspunsul A trebuie completat!
+              </div>
+            </div>
           </div>
           <div class="form-group">
-            <label for="response-b">Raspunsul B*</label>
-            <input [(ngModel)]="question?.answers[1].value" class="form-control" id="response-b" name="response-b"
+            <label for="responseB">Raspunsul B*</label>
+            <input #responseB="ngModel" [(ngModel)]="question?.answers[1].value" class="form-control" id="responseB" name="responseB"
                    type="text"
                    required
                    aria-describedby="responseBHelp" placeholder="Raspunsul B">
+            <div *ngIf="responseB.invalid && (responseB.dirty || responseB.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="responseB.errors.required">
+                Raspunsul B trebuie completat!
+              </div>
+            </div>
           </div>
           <div class="form-group">
-            <label for="response-c">Raspunsul C</label>
-            <input [(ngModel)]="question?.answers[2].value" class="form-control" id="response-c" name="response-c"
+            <label for="responseC">Raspunsul C</label>
+            <input #responseC="ngModel" [(ngModel)]="question?.answers[2].value" class="form-control" id="responseC" name="responseC"
                    type="text"
                    aria-describedby="responseCHelp" placeholder="Raspunsul C">
           </div>
           <div class="form-group">
-            <label for="response-d">Raspunsul D</label>
-            <input [(ngModel)]="question?.answers[3].value" class="form-control" id="response-d" name="response-d"
+            <label for="responseD">Raspunsul D</label>
+            <input #responseD="ngModel" [(ngModel)]="question?.answers[3].value" class="form-control" id="responseD" name="responseD"
                    type="text"
                    aria-describedby="responseDHelp" placeholder="Raspunsul D">
           </div>
           <div class="form-group">
-            <label for="response-e">Raspunsul E</label>
-            <input [(ngModel)]="question?.answers[4].value" class="form-control" id="response-e" name="response-e"
+            <label for="responseE">Raspunsul E</label>
+            <input #responseE="ngModel" [(ngModel)]="question?.answers[4].value" class="form-control" id="responseE" name="responseE"
                    type="text"
                    aria-describedby="responseEHelp" placeholder="Raspunsul E">
           </div>
           <div class="mt-5"></div>
           <div class="form-group">
             <label for="right-answer">Raspunsul corect*</label>
-            <select class="form-control" id="right-answer"
+            <select #rightAnswer="ngModel" class="form-control" id="right-answer"
                     required
                     [(ngModel)]="question.rightAnswer" name="rightAnswer">
               <ng-container *ngFor="let rightAnswer of rightAnswers, let i = index">
                 <option *ngIf="question.answers[i].value!==''" [value]="rightAnswer">{{rightAnswer}}</option>
               </ng-container>
             </select>
+            <div *ngIf="rightAnswer.invalid && (rightAnswer.dirty || rightAnswer.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="rightAnswer.errors.required">
+                Raspunsul corect trebuie ales!
+              </div>
+            </div>
           </div>
           <div class="form-group">
             <label for="value">Punctaj intrebare (recomandat de la 1 la 100)*</label>
-            <input [(ngModel)]="question.value" type="number" name="value" class="form-control" id="value" min="1"
-                   max="10" maxLength="2" required
+            <input #value="ngModel" [(ngModel)]="question.value" type="number" name="value" class="form-control" id="value" min="1"
+                   max="100" maxLength="2" required
                    aria-describedby="valueHelp" placeholder="Punctaj intrebare">
+            <div *ngIf="value.invalid && (value.dirty || value.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="value.errors.required">
+                Punctul intrebarii trebuie completat!
+              </div>
+            </div>
           </div>
           <div class="mt-5"></div>
           <div class="form-group">
@@ -80,21 +113,22 @@
           </div>
           <div class="mt-5"></div>
           <div class="text-center">
-            <button class="btn btn-secondary" [disabled]="questionForm.invalid" (click)="addCurrentQuestion()">Adauga
+            <button class="btn btn-secondary" [disabled]="questionForm.invalid" (click)="addCurrentQuestion(questionForm)">Adauga
               intrebarea curenta
             </button>
           </div>
         </form>
         <div class="mt-5"></div>
         <h4>Pasul 2</h4>
-        <div><small> Dupa ce ai adaugat intrebarile dorite, completeaza urmatoarele 3 campuri. Test ID si Data expirarii
-          testului sunt obligatorii.</small></div>
-        <div><small> <b>Link YOUTUBE video test</b> - reprezinta linkul spre un video ce va fi afisat in test.
+        <div><small> Dupa ce ai adaugat intrebarile dorite, completeaza urmatoarele campuri:</small></div>
+        <div><small> <b>Link YOUTUBE video</b> - reprezinta linkul spre un video ce va fi afisat in test. Nu este obligatoriu.
         </small></div>
         <div><small> <b>Test ID</b> - reprezinta id-ul de identificare in viitor a testului.
         </small></div>
         <div><small><b>Data expirarii testului</b>
           - reprezinta data pana la care testul se poate completa.</small></div>
+        <div *ngIf="showHomeButton"><small><b>Email</b>
+          - reprezinta adresa ta de email, astfel incat, atunci cand iti vei crea un cont, toate testele create vor fi afisate.</small></div>
         <form #testForm="ngForm" class="mt-3">
           <div class="form-group">
             <label for="link-youtube-test">Link YOUTUBE video</label>
@@ -114,10 +148,37 @@
           <div class="form-group">
             <label for="test-due-date">Data expirarii testului*</label>
             <div class="input-group">
-              <input id="test-due-date" class="form-control" placeholder="yyyy-mm-dd" required
+              <input #dueDate="ngModel" id="test-due-date" class="form-control" placeholder="yyyy-mm-dd" required
                      name="due-date" [(ngModel)]="test.dueDate" ngbDatepicker #d="ngbDatepicker">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+              </div>
+            </div>
+            <div *ngIf="dueDate.invalid && (dueDate.dirty || dueDate.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="dueDate.errors.required">
+                Data expirarii testului trebuie completata!
+              </div>
+              <div>
+                Data expirarii testului trebuie sa fie valida (aaaa-ll-zz)!
+              </div>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="showHomeButton">
+            <label for="email">Email*</label>
+            <input #email="ngModel" [(ngModel)]="test.creator.email" aria-describedby="emailHelp" class="form-control"
+                   id="email" minlength="6"
+                   name="email"
+                   pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
+                   placeholder="Introdu adresa ta de email" required
+                   type="email">
+            <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                 class="alert alert-danger">
+              <div *ngIf="email.errors.required">
+                Emailul este obligatoriu!
+              </div>
+              <div *ngIf="email.errors.pattern">
+                Emailul trebuie sa fie valid!
               </div>
             </div>
           </div>

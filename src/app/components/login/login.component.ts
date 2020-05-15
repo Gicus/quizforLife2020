@@ -24,8 +24,7 @@ export class LoginComponent implements OnInit {
     if (!!this.user.email && !!this.user.password) {
       this.authenticationService.signIn(this.user.email, this.user.password).then(
         ((x) => {
-          console.log(x);
-          this.router.navigate([`/dashboard`]);
+          this.router.navigate(['/dashboard/my-marks']);
         })
       );
     }
