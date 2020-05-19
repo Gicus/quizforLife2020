@@ -90,12 +90,15 @@ export class ViewTestComponent implements OnInit, OnDestroy {
   }
 
   public submitTest(): void {
-    this.currentMark.value = this.gradeTest();
-    this.currentMark.testId = this.test.id;
-    this.currentMark.answers = this.testResponse.answers;
-    this.currentMark.user = this.currentUser;
-    this.testService.postMark(this.currentMark);
-    this.goToValidation(this.currentMark.value, this.currentMark.testId, this.test.totalValue);
+    this.isTestExpired = this.checkTestExpirationDate(this.test.dueDate);
+    if (!this.isTestExpired) {
+      this.currentMark.value = this.gradeTest();
+      this.currentMark.testId = this.test.id;
+      this.currentMark.answers = this.testResponse.answers;
+      this.currentMark.user = this.currentUser;
+      this.testService.postMark(this.currentMark);
+      this.goToValidation(this.currentMark.value, this.currentMark.testId, this.test.totalValue);
+    }
   }
 
   public gradeTest(): number {
