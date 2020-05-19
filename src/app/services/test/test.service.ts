@@ -4,13 +4,17 @@ import {AngularFireDatabase} from '@angular/fire/database';
 import {database} from 'firebase';
 import {Observable} from 'rxjs';
 import {MarkModel} from '../../model/mark-model/mark-model';
+import {AngularFireStorage} from '@angular/fire/storage';
+import UploadMetadata = firebase.storage.UploadMetadata;
+import UploadTaskSnapshot = firebase.storage.UploadTaskSnapshot;
+import {finalize} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TestService {
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(private db: AngularFireDatabase, private storage: AngularFireStorage) {
   }
 
   public getTest(id: string): Observable<any> {
@@ -27,6 +31,14 @@ export class TestService {
 
   public getMyMarks(userEmail: string): Observable<any> {
     return this.db.list('marks', (ref) => ref.orderByChild('user/email').equalTo(userEmail)).valueChanges();
+  }
+
+  public uploadPhoto(filePath: string, selectedImage?: UploadMetadata): Observable<string | UploadTaskSnapshot> {
+    return this.storage.upload(filePath, selectedImage).snapshotChanges().pipe(finalize(() => {}));
+  }
+
+  public getDownloadUrl(filePath: string): Observable<string> {
+    return this.storage.ref(filePath).getDownloadURL();
   }
 
   public postTest(testModel: TestModel): database.ThenableReference {

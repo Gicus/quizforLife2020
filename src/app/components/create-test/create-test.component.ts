@@ -27,6 +27,12 @@ export class CreateTestComponent implements OnInit {
   public currentUser: UserModel = new UserModel();
   public showHomeButton = true;
 
+  public imgSrc: string;
+  public selectedImage: any = null;
+
+  public questionIsAdded = false;
+  public questionIsNotAdded = false;
+
   constructor(private testService: TestService, private router: Router, private authenticationService: AuthenticationService) {
     const user: any = JSON.parse(localStorage.getItem('user'));
     if (!!user) {
@@ -45,11 +51,41 @@ export class CreateTestComponent implements OnInit {
     }
   }
 
+  public showPreview(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => this.imgSrc = e.target.result;
+      reader.readAsDataURL(event.target.files[0]);
+      this.selectedImage = event.target.files[0];
+    } else {
+      this.imgSrc = '/assets/img/image_placeholder.jpg';
+      this.selectedImage = null;
+    }
+  }
+
   public addCurrentQuestion(form: NgForm): void {
-    this.test.questions.push(this.question);
-    this.test.calculateTotalValue();
-    this.question = new QuestionModel(++this.currentQuestionNumber, ++this.currentQuestionId);
-    form.resetForm();
+    const filePath = `${this.selectedImage.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+    this.testService.uploadPhoto(filePath, this.selectedImage).subscribe(() => {
+    }, () => {
+    }, () =>
+      this.testService.getDownloadUrl(filePath).subscribe((url: string) => {
+        this.question.imageUrl = url;
+        this.test.questions.push(this.question);
+        this.test.calculateTotalValue();
+        this.question = new QuestionModel(++this.currentQuestionNumber, ++this.currentQuestionId);
+
+        // reset form after question is added;
+        form.resetForm();
+        (document.getElementById('imageUrl') as HTMLInputElement).value = '';
+
+        this.questionIsAdded = true;
+        setTimeout(() => this.closeQuestionAlerts(), 3000);
+      }));
+  }
+
+  public closeQuestionAlerts() {
+    this.questionIsAdded = false;
+    this.questionIsNotAdded = false;
   }
 
   public isUniqueTestId(): boolean {
