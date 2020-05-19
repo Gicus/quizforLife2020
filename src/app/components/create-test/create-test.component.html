@@ -88,7 +88,7 @@
                     required
                     [(ngModel)]="question.rightAnswer" name="rightAnswer">
               <ng-container *ngFor="let rightAnswer of rightAnswers, let i = index">
-                <option *ngIf="question.answers[i].value!==''" [value]="rightAnswer">{{rightAnswer}}</option>
+                <option *ngIf="question.answers[i].value!=='' && question.answers[i].value!== undefined  && question.answers[i].value!== null" [value]="rightAnswer">{{rightAnswer}}</option>
               </ng-container>
             </select>
             <div *ngIf="rightAnswer.invalid && (rightAnswer.dirty || rightAnswer.touched)"
@@ -111,9 +111,12 @@
               </div>
             </div>
           </div>
+          <div class="text-left">
+            <img [src]="imgSrc" width="200px" height="150px" (click)="fileUploader.click()">
+          </div>
           <div class="form-group">
             <label>Incarca o imagine pentru aceasta intrebare</label>
-            <input (change)="showPreview($event)" accept="image/*" class="form-control" id="imageUrl"
+            <input (change)="showPreview($event)" accept="image/*" #fileUploader class="form-control" id="imageUrl"
                    name="imageUrl"
                    type="file">
           </div>
