@@ -73,6 +73,14 @@ export class ViewTestComponent implements OnInit, OnDestroy {
     });
   }
 
+  public isYoutubeVideoLinkValid(youtubeLink: string): boolean {
+    const regExp = new RegExp('/^(?:https?:\\/\\/)?(?:www\\.)?(?:youtube\\.com|youtu\\.be)\\/watch\\?v=([^&]+)/m');
+    if (youtubeLink.match(regExp)) {
+      return true;
+    }
+    return false;
+  }
+
   public checkTestExpirationDate(dueDate: NgbDateStruct): boolean {
     return this.dateService.isDateBeforeCurrentDate(dueDate);
   }
@@ -113,7 +121,13 @@ export class ViewTestComponent implements OnInit, OnDestroy {
   }
 
   public goToValidation(mark: number, testId: string, testTotalValue: number): void {
-    this.router.navigate([`${this.authenticationService.isLoggedIn() ? 'dashboard' : ''}/validation-test`], {state: {mark, testId, testTotalValue}});
+    this.router.navigate([`${this.authenticationService.isLoggedIn() ? 'dashboard' : ''}/validation-test`], {
+      state: {
+        mark,
+        testId,
+        testTotalValue
+      }
+    });
   }
 
   private searchCurrentUserMark(marks: MarkModel[]): MarkModel {

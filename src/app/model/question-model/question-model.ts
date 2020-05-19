@@ -2,6 +2,7 @@ import {AnswerModel} from '../answer-model/answer-model';
 
 export class QuestionModel {
   public id?: number;
+  public imageUrl: string;
   public youtubeVideoLink?: string;
   public currentNumber?: number;
   public text: string;

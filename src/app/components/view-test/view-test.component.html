@@ -7,20 +7,23 @@
       </div>
       <div>
         <form #accesForm="ngForm">
-          <div *ngIf="!!test && !!test.youtubeVideoLink" class="video-container mt-3 mb-3">
+          <div *ngIf="!!test && !!test.youtubeVideoLink && isYoutubeVideoLinkValid(test.youtubeVideoLink)" class="video-container mt-3 mb-3">
             <iframe [src]="'https://www.youtube.com/embed/' + test.youtubeVideoLink.replace('https://www.youtube.com/watch?v=', '').replace('https://www.youtu.be/', '') | safeString"
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen class="video-element"
                     frameborder="0"></iframe>
           </div>
           <div *ngFor="let question of test?.questions" class="form-group">
-            <div *ngIf="!!test.youtubeVideoLink" class="video-container mb-3">
+            <div *ngIf="!!question && !!question.youtubeVideoLink && isYoutubeVideoLinkValid(question.youtubeVideoLink)" class="video-container mb-3">
               <iframe [src]="'https://www.youtube.com/embed/' + question.youtubeVideoLink.replace('https://www.youtube.com/watch?v=', '').replace('https://www.youtu.be/', '')| safeString"
                       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                       allowfullscreen class="video-element"
                       frameborder="0"></iframe>
             </div>
-            <label [attr.for]="'answer' + question.id">{{question.text}}*</label>
+            <div *ngIf="!!question.imageUrl" class="mb-3">
+              <img [src]="question.imageUrl" class="image-element">
+            </div>
+            <label [attr.for]="'answer' + question.id"><b>{{question.currentNumber}}. </b>{{question.text}}*</label>
             <select [(ngModel)]="testResponse.answers[question.id]" [attr.id]="'answer' + question.id"
                     [name]="'answer' + question.id" class="form-control"
                     required>

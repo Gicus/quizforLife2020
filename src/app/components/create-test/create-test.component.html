@@ -15,7 +15,9 @@
         <form #questionForm="ngForm" class="mt-3">
           <div class="form-group">
             <label for="question" class="font-weight-bold">Intrebarea {{question.currentNumber}}*</label>
-            <textarea #mainQuestion="ngModel" [(ngModel)]="question.text" type="text" name="question" class="form-control" id="question"
+            <textarea #mainQuestion="ngModel" [(ngModel)]="question.text" class="form-control" id="question"
+                      name="question"
+                      type="text"
                       aria-describedby="intrebareaHelp"
                       placeholder="Adauga intrebarea" required minlength="3">
             </textarea>
@@ -32,7 +34,8 @@
           <div class="mt-5"></div>
           <div class="form-group">
             <label for="responseA">Raspunsul A*</label>
-            <input #responseA="ngModel" [(ngModel)]="question?.answers[0].value" class="form-control" id="responseA" name="responseA"
+            <input #responseA="ngModel" [(ngModel)]="question?.answers[0].value" class="form-control" id="responseA"
+                   name="responseA"
                    type="text"
                    required
                    aria-describedby="responseAHelp" placeholder="Raspunsul A">
@@ -45,7 +48,8 @@
           </div>
           <div class="form-group">
             <label for="responseB">Raspunsul B*</label>
-            <input #responseB="ngModel" [(ngModel)]="question?.answers[1].value" class="form-control" id="responseB" name="responseB"
+            <input #responseB="ngModel" [(ngModel)]="question?.answers[1].value" class="form-control" id="responseB"
+                   name="responseB"
                    type="text"
                    required
                    aria-describedby="responseBHelp" placeholder="Raspunsul B">
@@ -58,19 +62,22 @@
           </div>
           <div class="form-group">
             <label for="responseC">Raspunsul C</label>
-            <input #responseC="ngModel" [(ngModel)]="question?.answers[2].value" class="form-control" id="responseC" name="responseC"
+            <input #responseC="ngModel" [(ngModel)]="question?.answers[2].value" class="form-control" id="responseC"
+                   name="responseC"
                    type="text"
                    aria-describedby="responseCHelp" placeholder="Raspunsul C">
           </div>
           <div class="form-group">
             <label for="responseD">Raspunsul D</label>
-            <input #responseD="ngModel" [(ngModel)]="question?.answers[3].value" class="form-control" id="responseD" name="responseD"
+            <input #responseD="ngModel" [(ngModel)]="question?.answers[3].value" class="form-control" id="responseD"
+                   name="responseD"
                    type="text"
                    aria-describedby="responseDHelp" placeholder="Raspunsul D">
           </div>
           <div class="form-group">
             <label for="responseE">Raspunsul E</label>
-            <input #responseE="ngModel" [(ngModel)]="question?.answers[4].value" class="form-control" id="responseE" name="responseE"
+            <input #responseE="ngModel" [(ngModel)]="question?.answers[4].value" class="form-control" id="responseE"
+                   name="responseE"
                    type="text"
                    aria-describedby="responseEHelp" placeholder="Raspunsul E">
           </div>
@@ -93,7 +100,8 @@
           </div>
           <div class="form-group">
             <label for="value">Punctaj intrebare (recomandat de la 1 la 100)*</label>
-            <input #value="ngModel" [(ngModel)]="question.value" type="number" name="value" class="form-control" id="value" min="1"
+            <input #value="ngModel" [(ngModel)]="question.value" class="form-control" id="value" min="1"
+                   name="value" type="number"
                    max="100" maxLength="2" required
                    aria-describedby="valueHelp" placeholder="Punctaj intrebare">
             <div *ngIf="value.invalid && (value.dirty || value.touched)"
@@ -103,9 +111,15 @@
               </div>
             </div>
           </div>
+          <div class="form-group">
+            <label>Incarca o imagine pentru aceasta intrebare</label>
+            <input (change)="showPreview($event)" accept="image/*" class="form-control" id="imageUrl"
+                   name="imageUrl"
+                   type="file">
+          </div>
           <div class="mt-5"></div>
           <div class="form-group">
-            <label for="link-youtube-question">Link YOUTUBE video</label>
+            <label for="link-youtube-question">Link YOUTUBE video pentru intrebare</label>
             <input [(ngModel)]="question.youtubeVideoLink" aria-describedby="linkResponseHelp" class="form-control"
                    id="link-youtube-question"
                    name="link-youtube"
@@ -113,26 +127,40 @@
           </div>
           <div class="mt-5"></div>
           <div class="text-center">
-            <button class="btn btn-secondary" [disabled]="questionForm.invalid" (click)="addCurrentQuestion(questionForm)">Adauga
-              intrebarea curenta
+            <button (click)="addCurrentQuestion(questionForm)" [disabled]="questionForm.invalid"
+                    class="btn btn-secondary">
+              Adauga intrebarea curenta
             </button>
+          </div>
+          <div *ngIf="questionIsAdded" class="mt-5 text-center">
+            <ngb-alert (close)="closeQuestionAlerts()" [type]="'success'">Intrebarea {{question.currentNumber - 1}} a
+              fost adaugata cu succes!
+            </ngb-alert>
+          </div>
+          <div *ngIf="questionIsNotAdded" class="mt-5 text-center">
+            <ngb-alert (close)="closeQuestionAlerts()" [type]="'error'">Intrebarea {{question.currentNumber}} nu a putut
+              fi adaugata!
+            </ngb-alert>
           </div>
         </form>
         <div class="mt-5"></div>
         <h4>Pasul 2</h4>
         <div><small> Dupa ce ai adaugat intrebarile dorite, completeaza urmatoarele campuri:</small></div>
-        <div><small> <b>Link YOUTUBE video</b> - reprezinta linkul spre un video ce va fi afisat in test. Nu este obligatoriu.
+        <div><small> <b>Link YOUTUBE video</b> - reprezinta linkul spre un video ce va fi afisat in test. Nu este
+          obligatoriu.
         </small></div>
         <div><small> <b>Test ID</b> - reprezinta id-ul de identificare in viitor a testului.
         </small></div>
         <div><small><b>Data expirarii testului</b>
           - reprezinta data pana la care testul se poate completa.</small></div>
         <div *ngIf="showHomeButton"><small><b>Email</b>
-          - reprezinta adresa ta de email, astfel incat, atunci cand iti vei crea un cont, toate testele create vor fi afisate.</small></div>
+          - reprezinta adresa ta de email, astfel incat, atunci cand iti vei crea un cont, toate testele create vor fi
+          afisate.</small></div>
         <form #testForm="ngForm" class="mt-3">
           <div class="form-group">
             <label for="link-youtube-test">Link YOUTUBE video</label>
-            <input [(ngModel)]="test.youtubeVideoLink" aria-describedby="linkResponseHelp" class="form-control" id="link-youtube-test"
+            <input [(ngModel)]="test.youtubeVideoLink" aria-describedby="linkResponseHelp" class="form-control"
+                   id="link-youtube-test"
                    name="link-youtube"
                    placeholder="Link Youtube" type="text">
           </div>
