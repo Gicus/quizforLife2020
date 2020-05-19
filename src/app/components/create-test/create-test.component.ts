@@ -27,7 +27,7 @@ export class CreateTestComponent implements OnInit {
   public currentUser: UserModel = new UserModel();
   public showHomeButton = true;
 
-  public imgSrc: string;
+  public imgSrc: string = '/assets/img/image_placeholder.jpg';
   public selectedImage: any = null;
 
   public questionIsAdded = false;
@@ -77,6 +77,8 @@ export class CreateTestComponent implements OnInit {
         // reset form after question is added;
         form.resetForm();
         (document.getElementById('imageUrl') as HTMLInputElement).value = '';
+        this.imgSrc = '/assets/img/image_placeholder.jpg';
+        this.selectedImage = null;
 
         this.questionIsAdded = true;
         setTimeout(() => this.closeQuestionAlerts(), 3000);
