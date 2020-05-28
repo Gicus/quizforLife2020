@@ -161,9 +161,10 @@
           <form [formGroup]="testForm" (ngSubmit)="createTest()">
           <formly-form [form]="testForm" [fields]="testFields" [model]="test"></formly-form>
           <div class="text-center mt-5">
-            <button [disabled]="testForm.invalid || test.questions.length === 0 || !isUniqueTestId()"
+            <button [disabled]="testForm.invalid || test.questions.length === 0"
                     class="btn btn-primary">Publică testul
             </button>
+            <div *ngIf="errorMessage">{{ errorMessage }}</div>
           </div>
         </form>
         <div class="mb-5"></div>

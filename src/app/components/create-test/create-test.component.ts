@@ -28,6 +28,8 @@ export class CreateTestComponent implements OnInit {
   public testsIds$: Subscription;
   public currentUser: UserModel = new UserModel();
 
+  public errorMessage: string;
+
   public imgSrc: string = './assets/img/image_placeholder.jpg';
   public selectedImage: any = null;
 
@@ -106,7 +108,11 @@ export class CreateTestComponent implements OnInit {
   }
 
   public createTest(): void {
-    if (!this.testIsCreated && this.isUniqueTestId()) {
+    if (!this.isUniqueTestId()) {
+      this.errorMessage = "Id-ul testului nu este unic.";
+      return
+    }
+    if (!this.testIsCreated) {
       this.testService.postTest(this.test);
     }
     this.testIsCreated = true;
