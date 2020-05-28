@@ -31,6 +31,10 @@ import { HomepageButtonComponent } from './components/homepage-button/homepage-b
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 
+export function minlengthValidationMessage(err, field) {
+  return `Lungime minimă: ${field.templateOptions.minLength} caractere`;
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +67,14 @@ import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
       // TODO REMOVE
       // {enableTracing: true} // <-- debugging purposes only
     ),
-    FormlyModule.forRoot(),
+    FormlyModule.forRoot(
+      {
+        validationMessages: [
+          {name: 'required', message: 'Câmp obligatoriu.'},
+          {name: 'minlength', message: minlengthValidationMessage}
+        ]
+      }
+    ),
     FormlyBootstrapModule
   ],
   providers: [AngularFireAuth],

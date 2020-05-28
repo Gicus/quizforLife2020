@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   signIn(): void {
     if (this.form.valid) {
       this.authenticationService.signIn(this.user.email, this.user.password).then(
-        ((x) => {
+        (() => {
           this.router.navigate(['/dashboard/my-marks']);
         })
       );

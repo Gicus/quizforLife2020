@@ -1,30 +1,35 @@
-import {Component, OnInit} from '@angular/core';
-import {UserModel} from '../../model/user-model/user-model';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/authentication.service';
+import {FormlyService} from "../../services/formly.service";
+import {FormGroup} from "@angular/forms";
+import {FormlyFieldConfig} from "@ngx-formly/core";
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
 
   public testId: string;
-  public user: UserModel = new UserModel();
   public userIsCreated = false;
   public userIsNotCreated = false;
 
-  constructor(private router: Router, private authenticationService: AuthenticationService) {
-  }
+  public form = new FormGroup({});
+  public user = { firstName: '', lastName: '', email: '', password: '' };
+  public fields: FormlyFieldConfig[] = [];
 
-  ngOnInit(): void {
+  constructor(private router: Router,
+              private authenticationService: AuthenticationService,
+              private formlyService: FormlyService) {
+    this.fields = this.formlyService.registerConfig;
   }
 
   signUp(): void {
-    if (!!this.user.email && !!this.user.password) {
+    if (this.form.valid) {
       this.authenticationService
-        .signUp(this.user.email, this.user.password, `${this.user.name.lastName + ' ' + this.user.name.firstName}`)
+        .signUp(this.user.email, this.user.password, `${this.user.lastName + ' ' + this.user.firstName}`)
         .then(() => {
         this.userIsCreated = true;
         this.userIsNotCreated = false;
@@ -37,7 +42,7 @@ export class RegisterComponent implements OnInit {
   }
 
   public gotToLogin(): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['login']);
   }
 
   public close() {
