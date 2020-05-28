@@ -28,6 +28,8 @@ import {ResetPasswordComponent} from './components/reset-password/reset-password
 import {DashboardMyMarksComponent} from './components/dashboard-my-marks/dashboard-my-marks.component';
 import {DashboardTestsCreatedByMeComponent} from './components/dashboard-tests-created-by-me/dashboard-tests-created-by-me.component';
 import { HomepageButtonComponent } from './components/homepage-button/homepage-button.component';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import { HomepageButtonComponent } from './components/homepage-button/homepage-b
       appRoutes,
       // TODO REMOVE
       // {enableTracing: true} // <-- debugging purposes only
-    )
+    ),
+    FormlyModule.forRoot(),
+    FormlyBootstrapModule
   ],
   providers: [AngularFireAuth],
   bootstrap: [AppComponent]
