@@ -29,7 +29,6 @@ export class ViewTestComponent implements OnInit, OnDestroy {
   isTestIdValid = true;
   isTestAlreadySubmittedByCurrentUser = false;
   isTestExpired = false;
-  showHomeButton = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,7 +45,6 @@ export class ViewTestComponent implements OnInit, OnDestroy {
     if (!this.currentUser) {
       this.router.navigate(['/access-test']);
     }
-    this.showHomeButton = !this.authenticationService.isLoggedIn();
   }
 
   ngOnInit() {
@@ -109,10 +107,6 @@ export class ViewTestComponent implements OnInit, OnDestroy {
       }
     });
     return testValue;
-  }
-
-  public goToHome(): void {
-    this.router.navigate(['/']);
   }
 
   public goToAccess(): void {

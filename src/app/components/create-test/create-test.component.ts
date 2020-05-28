@@ -25,7 +25,6 @@ export class CreateTestComponent implements OnInit {
   public testsIds: string[] = [''];
   public testsIds$: Subscription;
   public currentUser: UserModel = new UserModel();
-  public showHomeButton = true;
 
   public imgSrc: string = './assets/img/image_placeholder.jpg';
   public selectedImage: any = null;
@@ -33,14 +32,18 @@ export class CreateTestComponent implements OnInit {
   public questionIsAdded = false;
   public questionIsNotAdded = false;
 
-  constructor(private testService: TestService, private router: Router, private authenticationService: AuthenticationService) {
+  public isAuthenticated: boolean;
+
+  constructor(private testService: TestService,
+              private router: Router,
+              private authenticationService: AuthenticationService) {
     const user: any = JSON.parse(localStorage.getItem('user'));
     if (!!user) {
       this.currentUser.email = user.email ? user.email : '';
       this.currentUser.name.firstName = user.name ? user.name.split(' ')[1] : '';
       this.currentUser.name.lastName = user.name ? user.name.split(' ')[0] : '';
     }
-    this.showHomeButton = !this.authenticationService.isLoggedIn();
+    this.isAuthenticated = this.authenticationService.isLoggedIn();
   }
 
   ngOnInit(): void {
@@ -99,10 +102,6 @@ export class CreateTestComponent implements OnInit {
       this.testService.postTest(this.test);
     }
     this.testIsCreated = true;
-  }
-
-  public goToHome(): void {
-    this.router.navigate(['/']);
   }
 
   public goToTest(): void {

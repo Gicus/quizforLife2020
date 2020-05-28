@@ -12,12 +12,10 @@ export class RegisterComponent implements OnInit {
 
   public testId: string;
   public user: UserModel = new UserModel();
-  public showHomeButton = true;
   public userIsCreated = false;
   public userIsNotCreated = false;
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
-    this.showHomeButton = !this.authenticationService.isLoggedIn();
   }
 
   ngOnInit(): void {
@@ -36,10 +34,6 @@ export class RegisterComponent implements OnInit {
             this.userIsNotCreated = true;
           });
     }
-  }
-
-  public goToHome(): void {
-    this.router.navigate(['/']);
   }
 
   public gotToLogin(): void {

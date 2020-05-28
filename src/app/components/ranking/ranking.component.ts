@@ -21,10 +21,8 @@ export class RankingComponent implements OnInit {
 
   public marks: MarkModel[] = [];
   public sortableMarks: MarkModel[] = [];
-  public showHomeButton = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService, private testService: TestService) {
-    this.showHomeButton = !this.authenticationService.isLoggedIn();
   }
 
   @ViewChildren(NgbdSortableHeaderDirective) headers: QueryList<NgbdSortableHeaderDirective>;
@@ -57,9 +55,5 @@ export class RankingComponent implements OnInit {
         return direction === 'asc' ? res : -res;
       });
     }
-  }
-
-  public goToHome(): void {
-    this.router.navigate(['/']);
   }
 }

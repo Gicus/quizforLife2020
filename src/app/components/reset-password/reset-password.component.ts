@@ -11,10 +11,8 @@ export class ResetPasswordComponent implements OnInit {
 
   public emailIsSent = false;
   public emailToReset: string;
-  public showHomeButton = true;
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
-    this.showHomeButton = !this.authenticationService.isLoggedIn();
   }
 
   ngOnInit(): void {
@@ -28,9 +26,5 @@ export class ResetPasswordComponent implements OnInit {
 
   public close() {
     this.emailIsSent = false;
-  }
-
-  public goToHome(): void {
-    this.router.navigate(['/']);
   }
 }

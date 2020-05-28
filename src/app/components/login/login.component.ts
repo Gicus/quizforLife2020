@@ -11,10 +11,8 @@ import {UserModel} from '../../model/user-model/user-model';
 export class LoginComponent implements OnInit {
 
   public user: UserModel = new UserModel();
-  public showHomeButton = true;
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
-    this.showHomeButton = !this.authenticationService.isLoggedIn();
   }
 
   ngOnInit(): void {
@@ -28,9 +26,5 @@ export class LoginComponent implements OnInit {
         })
       );
     }
-  }
-
-  public goToHome(): void {
-    this.router.navigate(['/']);
   }
 }

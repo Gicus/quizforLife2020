@@ -13,7 +13,6 @@ export class ValidationTestComponent implements OnInit {
   public mark;
   public testTotalValue;
   public testId;
-  public showHomeButton = true;
 
   constructor(
     private router: Router,
@@ -30,14 +29,9 @@ export class ValidationTestComponent implements OnInit {
     if (!isNotNullOrUndefined(this.mark) || !isNotNullOrUndefined(this.testTotalValue) || !isNotNullOrUndefined(this.testId)) {
       this.goToAccess();
     }
-    this.showHomeButton = !this.authenticationService.isLoggedIn();
   }
 
   ngOnInit(): void {
-  }
-
-  public goToHome(): void {
-    this.router.navigate(['/']);
   }
   public goToAccess(): void {
     this.router.navigate([`${this.authenticationService.isLoggedIn() ? 'dashboard' : ''}/access-test`]);

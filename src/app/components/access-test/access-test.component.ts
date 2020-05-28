@@ -14,7 +14,6 @@ export class AccessTestComponent implements OnInit {
 
   public testId: string;
   public currentUser: UserModel = new UserModel();
-  public showHomeButton = true;
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
     const user: any = JSON.parse(localStorage.getItem('user'));
@@ -29,15 +28,9 @@ export class AccessTestComponent implements OnInit {
       !!this.router.getCurrentNavigation().extras.state) {
       this.testId = this.router.getCurrentNavigation().extras.state.testId;
     }
-    this.showHomeButton = !this.authenticationService.isLoggedIn();
-
   }
 
   ngOnInit(): void {
-  }
-
-  public goToHome(): void {
-    this.router.navigate(['/']);
   }
 
   public goToTest(): void {
