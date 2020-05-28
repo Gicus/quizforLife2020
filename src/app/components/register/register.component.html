@@ -8,7 +8,7 @@
         <form [formGroup]="form" (ngSubmit)="signUp()">
           <formly-form [form]="form" [fields]="fields" [model]="user"></formly-form>
           <div class="mt-5 text-center">
-            <button (click)="signUp()" [disabled]="form.invalid" class="btn btn-primary">Înregistrează user
+            <button [disabled]="form.invalid" class="btn btn-primary">Înregistrează user
             </button>
             <button class="btn btn-secondary ml-2" routerLink="/login">Ai deja un cont?
             </button>

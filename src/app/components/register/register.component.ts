@@ -17,7 +17,7 @@ export class RegisterComponent {
   public userIsNotCreated = false;
 
   public form = new FormGroup({});
-  public user = { firstName: '', lastName: '', email: '', password: '' };
+  public user = { firstName: '', lastName: '', email: '', password: { password: '', confirmPassword: '' } };
   public fields: FormlyFieldConfig[] = [];
 
   constructor(private router: Router,
@@ -29,7 +29,7 @@ export class RegisterComponent {
   signUp(): void {
     if (this.form.valid) {
       this.authenticationService
-        .signUp(this.user.email, this.user.password, `${this.user.lastName + ' ' + this.user.firstName}`)
+        .signUp(this.user.email, this.user.password.password, `${this.user.lastName + ' ' + this.user.firstName}`)
         .then(() => {
         this.userIsCreated = true;
         this.userIsNotCreated = false;

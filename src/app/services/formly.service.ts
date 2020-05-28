@@ -46,6 +46,37 @@ export class FormlyService {
     }
   }
 
+  private get matchPasswordsConfig() {
+    return {
+      key: 'password',
+      validators: {
+        fieldMatch: {
+          expression: (control) => {
+            const value = control.value;
+
+            return value.passwordConfirm === value.password
+              // avoid displaying the message error when values are empty
+              || (!value.passwordConfirm || !value.password);
+          },
+          message: 'Parolele nu coincid.',
+          errorPath: 'passwordConfirm',
+        },
+      },
+      fieldGroup: [
+        this.passwordConfig,
+        {
+          key: 'passwordConfirm',
+          type: 'input',
+          templateOptions: {
+            type: 'password',
+            label: 'Confirmă parola',
+            required: true,
+          },
+        },
+      ],
+    }
+  }
+
   public get loginConfig(): FormlyFieldConfig[] {
     return [
       this.emailConfig,
@@ -58,7 +89,7 @@ export class FormlyService {
       this.simpleInputConfig('firstName', 'Nume'),
       this.simpleInputConfig('lastName', 'Prenume'),
       this.emailConfig,
-      this.passwordConfig,
+      this.matchPasswordsConfig,
     ];
   }
 }
