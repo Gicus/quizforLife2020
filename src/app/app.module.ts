@@ -30,6 +30,7 @@ import {DashboardTestsCreatedByMeComponent} from './components/dashboard-tests-c
 import { HomepageButtonComponent } from './components/homepage-button/homepage-button.component';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
+import {DatepickerInput} from "./formly/custom-components/datepicker-input.component";
 
 export function minlengthValidationMessage(err, field) {
   return `Lungime minimă: ${field.templateOptions.minLength} caractere`;
@@ -53,7 +54,8 @@ export function minlengthValidationMessage(err, field) {
     ResetPasswordComponent,
     DashboardMyMarksComponent,
     DashboardTestsCreatedByMeComponent,
-    HomepageButtonComponent
+    HomepageButtonComponent,
+    DatepickerInput
   ],
   imports: [
     BrowserModule,
@@ -72,8 +74,12 @@ export function minlengthValidationMessage(err, field) {
         validationMessages: [
           {name: 'required', message: 'Câmp obligatoriu.'},
           {name: 'minlength', message: minlengthValidationMessage}
-        ]
-      }
+        ],
+        types: [
+          { name: 'datepicker', component: DatepickerInput, wrappers: ['form-field'] },
+        ],
+      },
+
     ),
     FormlyBootstrapModule
   ],

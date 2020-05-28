@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {FormlyFieldConfig} from "@ngx-formly/core";
+import {AuthenticationService} from "../services/authentication.service";
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,7 @@ export class FormlyService {
     },
   }
 
-  constructor() {
+  constructor(private authenticationService: AuthenticationService) {
   }
 
   private simpleInputConfig(key: string, label: string, required = true, minLength = 3) {
@@ -42,6 +43,17 @@ export class FormlyService {
         label,
         required,
         minLength,
+      },
+    }
+  }
+
+  private dateInputConfig(key: string, label: string, required = true) {
+    return {
+      key,
+      type: 'datepicker',  // TODO: Implement date picker
+      templateOptions: {
+        label,
+        required,
       },
     }
   }
@@ -91,5 +103,19 @@ export class FormlyService {
       this.emailConfig,
       this.matchPasswordsConfig,
     ];
+  }
+
+  public get testConfig(): FormlyFieldConfig[] {
+    const config: FormlyFieldConfig[] = [
+      this.simpleInputConfig('id', 'ID', true, 0), // TODO: Add unique validator
+      this.simpleInputConfig('youtubeVideoLink', 'Youtube link', false),
+      this.dateInputConfig('dueDate', 'Data expirării testului')
+    ];
+
+    if (!this.authenticationService.isLoggedIn()) {
+      config.push(this.emailConfig);
+    }
+
+    return config;
   }
 }

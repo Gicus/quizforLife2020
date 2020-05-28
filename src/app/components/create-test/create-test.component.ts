@@ -7,7 +7,9 @@ import {cloneDeep} from 'lodash';
 import {Subscription} from 'rxjs';
 import {AuthenticationService} from '../../services/authentication.service';
 import {UserModel} from '../../model/user-model/user-model';
-import {NgForm} from '@angular/forms';
+import {FormGroup, NgForm} from '@angular/forms';
+import {FormlyService} from "../../formly/formly.service";
+import {FormlyFieldConfig} from "@ngx-formly/core";
 
 @Component({
   selector: 'app-create-test',
@@ -34,9 +36,15 @@ export class CreateTestComponent implements OnInit {
 
   public isAuthenticated: boolean;
 
+  public testForm = new FormGroup({});
+  public tes = { firstName: '', lastName: '', email: '', password: { password: '', confirmPassword: '' } };
+  public testFields: FormlyFieldConfig[] = [];
+
   constructor(private testService: TestService,
               private router: Router,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private formlyService: FormlyService) {
+    this.testFields = this.formlyService.testConfig;
     const user: any = JSON.parse(localStorage.getItem('user'));
     if (!!user) {
       this.currentUser.email = user.email ? user.email : '';
@@ -110,6 +118,5 @@ export class CreateTestComponent implements OnInit {
     } else {
       this.router.navigate(['/access-test'], {state: {testId: this.test.id}});
     }
-
   }
 }

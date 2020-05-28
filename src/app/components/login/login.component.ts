@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/authentication.service';
 import {FormGroup} from "@angular/forms";
 import {FormlyFieldConfig} from "@ngx-formly/core";
-import {FormlyService} from "../../services/formly.service";
+import {FormlyService} from "../../formly/formly.service";
 
 @Component({
   selector: 'app-login',
