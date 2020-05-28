@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MarkModel} from '../../model/mark-model/mark-model';
 import {UserModel} from '../../model/user-model/user-model';
 import {Router} from '@angular/router';
-import {TestService} from '../../services/test/test.service';
+import {TestService} from '../../services/test.service';
 import {cloneDeep} from 'lodash';
 
 @Component({

@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {TestService} from '../../services/test/test.service';
+import {TestService} from '../../services/test.service';
 import {TestModel} from '../../model/test-model/test-model';
 import {QuestionModel} from '../../model/question-model/question-model';
 import {Router} from '@angular/router';
 import {cloneDeep} from 'lodash';
 import {Subscription} from 'rxjs';
-import {AuthenticationService} from '../../services/auth/authentication.service';
+import {AuthenticationService} from '../../services/authentication.service';
 import {UserModel} from '../../model/user-model/user-model';
 import {NgForm} from '@angular/forms';
 

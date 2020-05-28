@@ -1,7 +1,7 @@
 import {mergeMap} from 'rxjs/operators';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {TestService} from '../../services/test/test.service';
+import {TestService} from '../../services/test.service';
 import {combineLatest} from 'rxjs';
 import {TestModel} from '../../model/test-model/test-model';
 import {TestResponseModel} from '../../model/test-response-model/test-response-model';
@@ -9,10 +9,10 @@ import {MarkModel} from '../../model/mark-model/mark-model';
 
 import {cloneDeep} from 'lodash';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
-import {DateService} from '../../services/date/date.service';
+import {DateService} from '../../services/date.service';
 import {UserModel} from '../../model/user-model/user-model';
 import {QuestionModel} from '../../model/question-model/question-model';
-import {AuthenticationService} from '../../services/auth/authentication.service';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-view-test',

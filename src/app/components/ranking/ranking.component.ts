@@ -1,12 +1,12 @@
 import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {mergeMap} from 'rxjs/operators';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {TestService} from '../../services/test/test.service';
+import {TestService} from '../../services/test.service';
 import {MarkModel} from '../../model/mark-model/mark-model';
 import {Subscription} from 'rxjs';
 import {cloneDeep, propertyOf} from 'lodash';
 import {NgbdSortableHeaderDirective, SortEvent} from './help/directives/sortable.directive';
-import {AuthenticationService} from '../../services/auth/authentication.service';
+import {AuthenticationService} from '../../services/authentication.service';
 
 const compare = (v1: string, v2: string) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
