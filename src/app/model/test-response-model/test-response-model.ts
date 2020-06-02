@@ -1,4 +1,6 @@
+import {AnswerModel} from '../answer-model/answer-model';
+
 export class TestResponseModel {
-  answers: string[] = [];
+  answers: AnswerModel[] = [];
   mark = 0;
 }
