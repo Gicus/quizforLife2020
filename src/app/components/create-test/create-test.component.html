@@ -12,14 +12,15 @@
         <div><small> Dupa ce apesi butonul <b>"Adauga intrebarea curenta"</b>, intrebarea curenta este salvata si se
           poate completa
           intrebarea urmatoare.</small></div>
+        <div><small> La fiecare intrebare, se poate adauga <b>o imagine sau chiar un video de pe YOUTUBE,</b> ca material ajutator.</small></div>
         <form #questionForm="ngForm" class="mt-3">
           <div class="form-group">
-            <label for="question" class="font-weight-bold">Intrebarea {{question.currentNumber}}*</label>
+            <label for="question" class="font-weight-bold">Intrebarea {{question.currentNumber}}</label>
             <textarea #mainQuestion="ngModel" [(ngModel)]="question.text" class="form-control" id="question"
                       name="question"
                       type="text"
                       aria-describedby="intrebareaHelp"
-                      placeholder="Adauga intrebarea" required minlength="3">
+                      placeholder="Adauga intrebarea">
             </textarea>
             <div *ngIf="mainQuestion.invalid && (mainQuestion.dirty || mainQuestion.touched)"
                  class="alert alert-danger">
@@ -30,6 +31,15 @@
                 Intrebarea trebuie sa aiba cel putin 3 caractere!
               </div>
             </div>
+          </div>
+          <div class="text-left">
+            <img [src]="imgSrc" width="200px" height="150px" (click)="fileUploader.click()">
+          </div>
+          <div class="form-group">
+            <label>Incarca o imagine pentru aceasta intrebare</label>
+            <input (change)="showPreview($event)" accept="image/*" #fileUploader class="form-control" id="imageUrl"
+                   name="imageUrl"
+                   type="file">
           </div>
           <div class="mt-5"></div>
           <div class="form-group">
@@ -111,15 +121,6 @@
               </div>
             </div>
           </div>
-          <div class="text-left">
-            <img [src]="imgSrc" width="200px" height="150px" (click)="fileUploader.click()">
-          </div>
-          <div class="form-group">
-            <label>Incarca o imagine pentru aceasta intrebare</label>
-            <input (change)="showPreview($event)" accept="image/*" #fileUploader class="form-control" id="imageUrl"
-                   name="imageUrl"
-                   type="file">
-          </div>
           <div class="mt-5"></div>
           <div class="form-group">
             <label for="link-youtube-question">Link YOUTUBE video pentru intrebare</label>
@@ -136,8 +137,11 @@
             </button>
           </div>
           <div *ngIf="questionIsAdded" class="mt-5 text-center">
-            <ngb-alert (close)="closeQuestionAlerts()" [type]="'success'">Intrebarea {{question.currentNumber - 1}} a
-              fost adaugata cu succes!
+            <ngb-alert (close)="closeQuestionAlerts()" [type]="'success'">
+              <div>Intrebarea {{question.currentNumber - 1}} a
+                fost adaugata cu succes.
+              </div>
+              <div>Poti adauga urmatoarea intrebare sau trece la pasul urmator pentru a finaliza testul!</div>
             </ngb-alert>
           </div>
           <div *ngIf="questionIsNotAdded" class="mt-5 text-center">
@@ -149,9 +153,6 @@
         <div class="mt-5"></div>
         <h4>Pasul 2</h4>
         <div><small> Dupa ce ai adaugat intrebarile dorite, completeaza urmatoarele campuri:</small></div>
-        <div><small> <b>Link YOUTUBE video</b> - reprezinta linkul spre un video ce va fi afisat in test. Nu este
-          obligatoriu.
-        </small></div>
         <div><small> <b>Test ID</b> - reprezinta id-ul de identificare in viitor a testului.
         </small></div>
         <div><small><b>Data expirarii testului</b>
@@ -159,14 +160,10 @@
         <div *ngIf="showHomeButton"><small><b>Email</b>
           - reprezinta adresa ta de email, astfel incat, atunci cand iti vei crea un cont, toate testele create vor fi
           afisate.</small></div>
+        <div><small> <b>Link YOUTUBE video</b> - reprezinta linkul spre un video ce va fi afisat in test. Nu este
+          obligatoriu.
+        </small></div>
         <form #testForm="ngForm" class="mt-3">
-          <div class="form-group">
-            <label for="link-youtube-test">Link YOUTUBE video</label>
-            <input [(ngModel)]="test.youtubeVideoLink" aria-describedby="linkResponseHelp" class="form-control"
-                   id="link-youtube-test"
-                   name="link-youtube"
-                   placeholder="Link Youtube" type="text">
-          </div>
           <div class="form-group">
             <label for="test-id">Test ID*</label>
             <input (ngModelChange)="test.id=$event" [ngModel]="test.id | singleString" aria-describedby="testIdHelp"
@@ -196,7 +193,7 @@
             </div>
           </div>
           <div class="form-group" *ngIf="showHomeButton">
-            <label for="email">Email*</label>
+            <label for="email">Email creator*</label>
             <input #email="ngModel" [(ngModel)]="test.creator.email" aria-describedby="emailHelp" class="form-control"
                    id="email" minlength="6"
                    name="email"
@@ -212,6 +209,15 @@
                 Emailul trebuie sa fie valid!
               </div>
             </div>
+          </div>
+          <div class="form-group">
+            <label for="link-youtube-test">Link YOUTUBE video</label>
+            <div><small> Linkul trebuie sa fie de tipul: <b>https://www.youtube.com/watch?v=ETt1WzVA2SA</b> sau de tipul: <b>https://youtu.be/Czb-mHR22TI</b>
+            </small></div>
+            <input [(ngModel)]="test.youtubeVideoLink" aria-describedby="linkResponseHelp" class="form-control"
+                   id="link-youtube-test"
+                   name="link-youtube"
+                   placeholder="Link Youtube" type="text">
           </div>
           <div class="text-center mt-5">
             <button (click)="createTest()"

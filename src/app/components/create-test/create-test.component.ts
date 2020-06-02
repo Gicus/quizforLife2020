@@ -27,7 +27,7 @@ export class CreateTestComponent implements OnInit {
   public currentUser: UserModel = new UserModel();
   public showHomeButton = true;
 
-  public imgSrc: string = './assets/img/image_placeholder.jpg';
+  public imgSrc = './assets/img/image_placeholder.jpg';
   public selectedImage: any = null;
 
   public questionIsAdded = false;
@@ -64,25 +64,40 @@ export class CreateTestComponent implements OnInit {
   }
 
   public addCurrentQuestion(form: NgForm): void {
-    const filePath = `${this.selectedImage.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
-    this.testService.uploadPhoto(filePath, this.selectedImage).subscribe(() => {
-    }, () => {
-    }, () =>
-      this.testService.getDownloadUrl(filePath).subscribe((url: string) => {
-        this.question.imageUrl = url;
-        this.test.questions.push(this.question);
-        this.test.calculateTotalValue();
-        this.question = new QuestionModel(++this.currentQuestionNumber, ++this.currentQuestionId);
+    if (this.selectedImage && this.selectedImage.name) {
+      const filePath = `${this.selectedImage.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+      this.testService.uploadPhoto(filePath, this.selectedImage).subscribe(() => {
+      }, () => {
+      }, () =>
+        this.testService.getDownloadUrl(filePath).subscribe((url: string) => {
+          this.question.imageUrl = url;
+          this.test.questions.push(this.question);
+          this.test.calculateTotalValue();
+          this.question = new QuestionModel(++this.currentQuestionNumber, ++this.currentQuestionId);
 
-        // reset form after question is added;
-        form.resetForm();
-        (document.getElementById('imageUrl') as HTMLInputElement).value = '';
-        this.imgSrc = './assets/img/image_placeholder.jpg';
-        this.selectedImage = null;
+          // reset form after question is added;
+          form.resetForm();
+          (document.getElementById('imageUrl') as HTMLInputElement).value = '';
+          this.imgSrc = './assets/img/image_placeholder.jpg';
+          this.selectedImage = null;
 
-        this.questionIsAdded = true;
-        setTimeout(() => this.closeQuestionAlerts(), 3000);
-      }));
+          this.questionIsAdded = true;
+          setTimeout(() => this.closeQuestionAlerts(), 5000);
+        }));
+    } else {
+      this.test.questions.push(this.question);
+      this.test.calculateTotalValue();
+      this.question = new QuestionModel(++this.currentQuestionNumber, ++this.currentQuestionId);
+
+      // reset form after question is added;
+      form.resetForm();
+      (document.getElementById('imageUrl') as HTMLInputElement).value = '';
+      this.imgSrc = './assets/img/image_placeholder.jpg';
+      this.selectedImage = null;
+
+      this.questionIsAdded = true;
+      setTimeout(() => this.closeQuestionAlerts(), 5000);
+    }
   }
 
   public closeQuestionAlerts() {

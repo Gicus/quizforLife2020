@@ -13,29 +13,41 @@
                     allowfullscreen class="video-element"
                     frameborder="0"></iframe>
           </div>
-          <div *ngFor="let question of test?.questions" class="form-group">
+          <div *ngFor="let question of test?.questions" class="form-group mb-5">
             <div *ngIf="!!question && !!question.youtubeVideoLink && isYoutubeVideoLinkValid(question.youtubeVideoLink)" class="video-container mb-3">
               <iframe [src]="'https://www.youtube.com/embed/' + question.youtubeVideoLink.replace('https://www.youtube.com/watch?v=', '').replace('https://www.youtu.be/', '')| safeString"
                       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                       allowfullscreen class="video-element"
                       frameborder="0"></iframe>
             </div>
-            <div *ngIf="!!question.imageUrl" class="mb-3">
+            <div *ngIf="!!question.imageUrl" class="mb-3 mt-5">
               <img [src]="question.imageUrl" class="image-element">
             </div>
             <label [attr.for]="'answer' + question.id"><b>{{question.currentNumber}}. </b>{{question.text}}*</label>
-            <select [(ngModel)]="testResponse.answers[question.id]" [attr.id]="'answer' + question.id"
+            <select (change)="setAnswerValue($event, question.id)" [attr.id]="'answer' + question.id"
                     [name]="'answer' + question.id" class="form-control"
                     required>
+              <option [value]="''"></option>
               <ng-container *ngFor="let answer of question.answers">
                 <option *ngIf="answer.value !== ''" [value]="answer.id">{{answer.value}}</option>
               </ng-container>
             </select>
+            <div class="text-left">
+              <img [src]="imgSrcs[question.id]" width="200px" height="150px" (click)="fileUploader.click()">
+            </div>
+            <div class="form-group">
+              <label>Incarca o imagine ca raspuns pentru aceasta intrebare</label>
+              <input (change)="showPreview($event, question.id)" accept="image/*" #fileUploader class="form-control" id="imageUrl"
+                     name="imageUrl"
+                     type="file">
+            </div>
           </div>
           <div class="mt-5 text-center">
-            <button (click)="submitTest()" [disabled]="accesForm.invalid" class="btn btn-primary">Trimite
+            <button (click)="submitTest()" [disabled]="accesForm.invalid || isSendingResponses" class="btn btn-primary">
+              <span *ngIf="!isSendingResponses">Trimite
               raspunsurile
-              la test
+              la test</span>
+              <i *ngIf="isSendingResponses" class="fas fa-spinner fa-spin"></i>
             </button>
           </div>
         </form>
@@ -61,10 +73,9 @@
       <div *ngFor="let question of test?.questions; let i = index" class="text-left mb-3">
         <div class="font-weight-bold question-text">{{question.currentNumber}}.{{question.text}}</div>
         <div>
-          <div><span class="question-right-answer">Raspunsul corect:</span> {{question.rightAnswer}}
-            . {{getAnswerValue(question, question.rightAnswer)}}</div>
-          <div><span class="question-choosen-answer">Raspunsul ales:</span> {{currentMark.answers[i]}}
-            . {{getAnswerValue(question, currentMark.answers[i])}} </div>
+          <div><span class="question-right-answer">Raspunsul corect:</span> {{question.rightAnswer}}. {{getAnswerValue(question, question.rightAnswer)}}</div>
+          <div *ngIf="currentMark.answers[i].value!=='image'"><span class="question-choosen-answer">Raspunsul ales:</span> {{currentMark.answers[i].value}}. {{getAnswerValue(question, currentMark.answers[i].value)}} </div>
+          <div *ngIf="currentMark.answers[i].value==='image'"><span class="question-choosen-answer">La aceasta intrebare, nu ai ales un raspuns!</span></div>
         </div>
       </div>
     </div>
