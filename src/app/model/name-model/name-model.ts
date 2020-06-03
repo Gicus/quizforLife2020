@@ -5,7 +5,7 @@ export class NameModel {
   public static buildNameLabel(nameModel: NameModel): string {
     let name = '';
     if (nameModel && nameModel.firstName && nameModel.lastName) {
-      name = nameModel.firstName + '' + nameModel.lastName;
+      name = nameModel.firstName + ' ' + nameModel.lastName;
     }
     return name;
   }

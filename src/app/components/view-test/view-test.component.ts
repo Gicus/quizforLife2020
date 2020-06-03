@@ -1,5 +1,5 @@
 import {mergeMap, switchMap, tap} from 'rxjs/operators';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {TestService} from '../../services/test/test.service';
 import {combineLatest, forkJoin, Observable, of} from 'rxjs';
@@ -8,7 +8,7 @@ import {TestResponseModel} from '../../model/test-response-model/test-response-m
 import {MarkModel} from '../../model/mark-model/mark-model';
 
 import {cloneDeep} from 'lodash';
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDateStruct, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DateService} from '../../services/date/date.service';
 import {UserModel} from '../../model/user-model/user-model';
 import {QuestionModel} from '../../model/question-model/question-model';
@@ -32,6 +32,8 @@ export class ViewTestComponent implements OnInit, OnDestroy {
   public isTestExpired = false;
   public showHomeButton = true;
   public isSendingResponses = false;
+  public modalImageUrl: string;
+  public modalTitle: string;
 
   public imgSrcs: string[] = [
     './assets/img/image_placeholder.jpg',
@@ -63,6 +65,7 @@ export class ViewTestComponent implements OnInit, OnDestroy {
     private testService: TestService,
     private authenticationService: AuthenticationService,
     private dateService: DateService,
+    private modalService: NgbModal
   ) {
     if (!!this.router.getCurrentNavigation() &&
       !!this.router.getCurrentNavigation().extras &&
@@ -145,7 +148,10 @@ export class ViewTestComponent implements OnInit, OnDestroy {
         this.currentMark.user = this.currentUser;
         this.testService.postMark(this.currentMark);
         this.goToValidation(this.currentMark.value, this.currentMark.testId, this.test.totalValue);
-      }, ()=> {}, () => {this.isSendingResponses = false});
+      }, () => {
+      }, () => {
+        this.isSendingResponses = false;
+      });
     }
   }
 
@@ -182,6 +188,15 @@ export class ViewTestComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+  }
+
+  public openModal(targetModal: TemplateRef<any>, imageUrl: string, modalTitle: string) {
+    this.modalService.open(targetModal, {
+      centered: true,
+      backdrop: 'static'
+    });
+    this.modalImageUrl = imageUrl;
+    this.modalTitle = modalTitle;
   }
 
   private uploadImages(): Observable<any> {

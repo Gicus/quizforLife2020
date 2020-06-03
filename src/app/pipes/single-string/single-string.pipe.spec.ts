@@ -1,4 +1,4 @@
-import { SingleStringPipe } from './single-string.pipe';
+import {SingleStringPipe} from './single-string.pipe';
 
 describe('SingleStringPipe', () => {
   it('create an instance', () => {
