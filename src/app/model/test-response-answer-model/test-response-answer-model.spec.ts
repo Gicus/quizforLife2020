@@ -1,4 +1,4 @@
-import { TestResponseAnswerModel } from './test-response-answer-model';
+import {TestResponseAnswerModel} from './test-response-answer-model';
 
 describe('TestResponseAnswerModel', () => {
   it('should create an instance', () => {

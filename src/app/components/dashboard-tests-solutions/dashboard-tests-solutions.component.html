@@ -1,0 +1,48 @@
+<!-- Solved tests -->
+<h2 class="h2 mb-4 text-center">Rezolvari elevi</h2>
+<div class="row">
+  <div *ngFor="let mark of marks let j = index" class="col-xl-6 col-md-6 mt-5">
+    <div class="font-weight-bold">
+      <span class="student-name-label">Elev {{j + 1}}: </span>
+      <span class="student-name-value"> {{getUserName(mark.user.name)}}</span>
+    </div>
+    <div class="font-weight-bold mb-3">
+      <span class="student-mark-label">Punctaj obtinut: </span>
+      <span class="student-mark-value"> {{mark.value}}</span>
+    </div>
+    <div *ngFor="let question of test?.questions; let i = index" class="mb-4" class="text-left mb-4">
+      <div class="font-weight-bold question-text">{{question.currentNumber}}. {{question.text}}</div>
+      <div>
+        <div><span class="question-right-answer">Raspunsul corect:</span> {{question.rightAnswer}}
+          . {{getAnswerValue(question, question.rightAnswer)}}</div>
+        <div *ngIf="mark.answers[i].value!=='image'"><span
+          class="question-choosen-answer">Raspunsul ales:</span> {{mark.answers[i].value}}
+          . {{getAnswerValue(question, mark.answers[i].value)}} </div>
+        <div *ngIf="mark.answers[i].value==='image'"><span class="question-choosen-answer">La aceasta intrebare, nu a ales un raspuns!</span>
+        </div>
+        <div *ngIf="!!mark.answers[i].imageUrl" class="mb-3 mt-1">
+          <img
+            (click)="openModal(imageUrlModal, mark.answers[i].imageUrl, 'Imagine incarcata de ' +  getUserName(mark.user.name))"
+            [src]="mark.answers[i].imageUrl"
+            class="image-element">
+        </div>
+        <ng-template #imageUrlModal let-modal>
+          <div class="modal-header">
+            <h5 class="modal-title">{{modalTitle}}</h5>
+            <button (click)="modal.dismiss()" aria-label="Close" class="close" type="button">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body text-center">
+            <img [src]="modalImageUrl" id="imagepreview" style="max-width: 70%; max-height: 80%;">
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="marks.length == 0" class="row" class="text-center">
+  <div class="text-lg font-weight-bold text-gray-600 mb-1"> Momentan, niciun elev nu a rezolvat testul propus"!
+  </div>
+</div>

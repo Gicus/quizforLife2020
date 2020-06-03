@@ -12,6 +12,7 @@ import {AuthenticationGuard} from './guards/auth/authentication.guard';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import {DashboardMyMarksComponent} from './components/dashboard-my-marks/dashboard-my-marks.component';
 import {DashboardTestsCreatedByMeComponent} from './components/dashboard-tests-created-by-me/dashboard-tests-created-by-me.component';
+import {DashboardTestSolutionsComponent} from './components/dashboard-tests-solutions/dashboard-tests-solutions.component';
 
 export const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -22,7 +23,21 @@ export const appRoutes: Routes = [
     children: [
       {path: '', redirectTo: 'my-tests', pathMatch: 'full'},
       {path: 'my-marks', component: DashboardMyMarksComponent},
-      {path: 'my-created-tests', component: DashboardTestsCreatedByMeComponent},
+      {
+        path: 'my-created-tests',
+        children: [
+          {path: '', component: DashboardTestsCreatedByMeComponent, pathMatch: 'full'},
+          {
+            path: ':id',
+            component: DashboardTestSolutionsComponent,
+            children: [
+              {
+                path: 'solutions',
+                component: DashboardTestSolutionsComponent,
+              }]
+          }
+        ]
+      },
       {path: 'access-test', component: AccessTestComponent},
       {path: 'create-test', component: CreateTestComponent},
       {path: 'view-test/:id', component: ViewTestComponent},

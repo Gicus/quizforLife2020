@@ -27,6 +27,7 @@ import {SafeStringPipe} from './pipes/safe-string/safe-string.pipe';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import {DashboardMyMarksComponent} from './components/dashboard-my-marks/dashboard-my-marks.component';
 import {DashboardTestsCreatedByMeComponent} from './components/dashboard-tests-created-by-me/dashboard-tests-created-by-me.component';
+import {DashboardTestSolutionsComponent} from './components/dashboard-tests-solutions/dashboard-tests-solutions.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {DashboardTestsCreatedByMeComponent} from './components/dashboard-tests-c
     SafeStringPipe,
     ResetPasswordComponent,
     DashboardMyMarksComponent,
-    DashboardTestsCreatedByMeComponent
+    DashboardTestsCreatedByMeComponent,
+    DashboardTestSolutionsComponent
   ],
   imports: [
     BrowserModule,
@@ -56,8 +58,6 @@ import {DashboardTestsCreatedByMeComponent} from './components/dashboard-tests-c
     AngularFireDatabaseModule,
     RouterModule.forRoot(
       appRoutes,
-      // TODO REMOVE
-      {enableTracing: true} // <-- debugging purposes only
     )
   ],
   providers: [AngularFireAuth],

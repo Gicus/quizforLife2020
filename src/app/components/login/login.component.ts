@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
 
   public user: UserModel = new UserModel();
   public showHomeButton = true;
+  public errorOnLogin = false;
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
     this.showHomeButton = !this.authenticationService.isLoggedIn();
@@ -23,14 +24,20 @@ export class LoginComponent implements OnInit {
   signIn(): void {
     if (!!this.user.email && !!this.user.password) {
       this.authenticationService.signIn(this.user.email, this.user.password).then(
-        ((x) => {
+        (x) => {
           this.router.navigate(['/dashboard/my-marks']);
-        })
+        }, (error) => {
+          this.errorOnLogin = true;
+        }
       );
     }
   }
 
   public goToHome(): void {
     this.router.navigate(['/']);
+  }
+
+  public close() {
+    this.errorOnLogin = false;
   }
 }

@@ -1,0 +1,30 @@
+.question-text {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.question-right-answer {
+  color: green;
+  font-weight: bolder;
+}
+
+.question-choosen-answer {
+  color: grey;
+  font-weight: bold;
+}
+
+.student-name-label, .student-mark-label {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #b7b9cc
+}
+
+.student-name-value, .student-mark-value {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.image-element {
+  max-width: 150%;
+  max-height: 150px;
+}

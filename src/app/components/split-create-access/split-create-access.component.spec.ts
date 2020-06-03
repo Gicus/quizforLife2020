@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SplitCreateAccessComponent } from './split-create-access.component';
+import {SplitCreateAccessComponent} from './split-create-access.component';
 
 describe('SplitCreateAccessComponent', () => {
   let component: SplitCreateAccessComponent;

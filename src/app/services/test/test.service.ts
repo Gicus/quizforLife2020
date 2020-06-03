@@ -5,9 +5,9 @@ import {database} from 'firebase';
 import {Observable} from 'rxjs';
 import {MarkModel} from '../../model/mark-model/mark-model';
 import {AngularFireStorage} from '@angular/fire/storage';
+import {finalize} from 'rxjs/operators';
 import UploadMetadata = firebase.storage.UploadMetadata;
 import UploadTaskSnapshot = firebase.storage.UploadTaskSnapshot;
-import {finalize} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

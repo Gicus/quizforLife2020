@@ -30,8 +30,7 @@ export class DashboardTestsCreatedByMeComponent implements OnInit {
     });
   }
 
-  public navigateToViewTest(testId: string): void {
-    this.router.navigate([`dashboard/view-test/${testId}`], {state: {user: this.currentUser}});
+  public navigateToTestSolutions(testId: string): void {
+    this.router.navigate([`dashboard//my-created-tests/${testId}/solutions`], {state: {user: this.currentUser}});
   }
-
 }

@@ -14,30 +14,47 @@
                     frameborder="0"></iframe>
           </div>
           <div *ngFor="let question of test?.questions" class="form-group mb-5">
-            <div *ngIf="!!question && !!question.youtubeVideoLink && isYoutubeVideoLinkValid(question.youtubeVideoLink)" class="video-container mb-3">
-              <iframe [src]="'https://www.youtube.com/embed/' + question.youtubeVideoLink.replace('https://www.youtube.com/watch?v=', '').replace('https://www.youtu.be/', '')| safeString"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen class="video-element"
-                      frameborder="0"></iframe>
+            <div *ngIf="!!question && !!question.youtubeVideoLink && isYoutubeVideoLinkValid(question.youtubeVideoLink)"
+                 class="video-container mb-3">
+              <iframe
+                [src]="'https://www.youtube.com/embed/' + question.youtubeVideoLink.replace('https://www.youtube.com/watch?v=', '').replace('https://www.youtu.be/', '')| safeString"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen class="video-element"
+                frameborder="0"></iframe>
             </div>
             <div *ngIf="!!question.imageUrl" class="mb-3 mt-5">
-              <img [src]="question.imageUrl" class="image-element">
+              <img (click)="openModal(imageUrlModal, question.imageUrl, 'Resursa ajutatoare')" [src]="question.imageUrl"
+                   class="image-element">
             </div>
+            <ng-template #imageUrlModal let-modal>
+              <div class="modal-header">
+                <h5 class="modal-title">{{modalTitle}}</h5>
+                <button (click)="modal.dismiss()" aria-label="Close" class="close" type="button">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              <div class="modal-body text-center">
+                <img [src]="modalImageUrl" id="imagepreview" style="max-width: 70%; max-height: 80%;">
+              </div>
+            </ng-template>
             <label [attr.for]="'answer' + question.id"><b>{{question.currentNumber}}. </b>{{question.text}}*</label>
             <select (change)="setAnswerValue($event, question.id)" [attr.id]="'answer' + question.id"
                     [name]="'answer' + question.id" class="form-control"
                     required>
               <option [value]="''"></option>
               <ng-container *ngFor="let answer of question.answers">
-                <option *ngIf="answer.value !== ''" [value]="answer.id">{{answer.value}}</option>
+                <option *ngIf="(answer.value !== '') && (answer.value !== undefined) && (answer.value !== null)"
+                        [value]="answer.id">{{answer.value}}</option>
               </ng-container>
             </select>
-            <div class="text-left">
-              <img [src]="imgSrcs[question.id]" width="200px" height="150px" (click)="fileUploader.click()">
+            <div class="text-left mt-1">
+              <img (click)="fileUploader.click()" [src]="imgSrcs[question.id]" height="100px" width="150px">
             </div>
             <div class="form-group">
               <label>Incarca o imagine ca raspuns pentru aceasta intrebare</label>
-              <input (change)="showPreview($event, question.id)" accept="image/*" #fileUploader class="form-control" id="imageUrl"
+              <input #fileUploader (change)="showPreview($event, question.id)" accept="image/*" class="form-control"
+                     id="imageUrl"
                      name="imageUrl"
                      type="file">
             </div>

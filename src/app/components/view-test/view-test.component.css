@@ -39,6 +39,6 @@
 }
 
 .image-element {
-  width: 100%;
-  max-height: 1000px;
+  max-width: 150%;
+  max-height: 150px;
 }

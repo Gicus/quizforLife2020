@@ -1,4 +1,4 @@
-import { NameModel } from './name-model';
+import {NameModel} from './name-model';
 
 describe('NameModel', () => {
   it('should create an instance', () => {

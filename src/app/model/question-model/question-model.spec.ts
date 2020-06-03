@@ -1,4 +1,4 @@
-import { QuestionModel } from './question-model';
+import {QuestionModel} from './question-model';
 
 describe('QuestionModel', () => {
   it('should create an instance', () => {

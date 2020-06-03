@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 export class ResetPasswordComponent implements OnInit {
 
   public emailIsSent = false;
+  public errorOnSendingRecoveringEmail = false;
   public emailToReset: string;
   public showHomeButton = true;
 
@@ -22,12 +23,13 @@ export class ResetPasswordComponent implements OnInit {
 
   public resetPassword(): void {
     if (!!this.emailToReset) {
-      this.authenticationService.resetPassword(this.emailToReset).then(() => this.emailIsSent = true);
+      this.authenticationService.resetPassword(this.emailToReset).then(() => this.emailIsSent = true, () => this.errorOnSendingRecoveringEmail = true);
     }
   }
 
   public close() {
     this.emailIsSent = false;
+    this.errorOnSendingRecoveringEmail = false;
   }
 
   public goToHome(): void {
