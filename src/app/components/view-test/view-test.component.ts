@@ -103,7 +103,7 @@ export class ViewTestComponent implements OnInit, OnDestroy {
   }
 
   public isYoutubeVideoLinkValid(youtubeLink: string): boolean {
-    const regExp = new RegExp('/^(?:https?:\\/\\/)?(?:www\\.)?(?:youtube\\.com|youtu\\.be)\\/watch\\?v=([^&]+)/m');
+    const regExp = new RegExp('^((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$');
     return !!youtubeLink.match(regExp);
   }
 
@@ -193,7 +193,8 @@ export class ViewTestComponent implements OnInit, OnDestroy {
   public openModal(targetModal: TemplateRef<any>, imageUrl: string, modalTitle: string) {
     this.modalService.open(targetModal, {
       centered: true,
-      backdrop: 'static'
+      backdrop: 'static',
+      size: 'lg'
     });
     this.modalImageUrl = imageUrl;
     this.modalTitle = modalTitle;
